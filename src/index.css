@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+@theme {
+  --font-Inter: "Inter", sans-serif;
+}
+
+@theme {
+  --font-Poppins: "Poppins", sans-serif;
+}
