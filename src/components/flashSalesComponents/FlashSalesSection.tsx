@@ -8,7 +8,10 @@ import { useRef } from "react";
 import { flashSalesProductsData } from "../../productsData";
 import type { Props } from "../../pages/Home";
 
-export const FlashSalesSection = ({ setDisplayProduct }: Props) => {
+export const FlashSalesSection = ({
+  setDisplayProduct,
+  setDisplayRelatedProduct,
+}: Props) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: "left" | "right") => {
@@ -56,6 +59,7 @@ export const FlashSalesSection = ({ setDisplayProduct }: Props) => {
                   discountedProductPrice={discountedProductPrice}
                   rating={rating}
                   setDisplayProduct={setDisplayProduct}
+                  setDisplayRelatedProduct={setDisplayRelatedProduct}
                 />
               </li>
             )

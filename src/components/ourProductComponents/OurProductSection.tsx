@@ -5,7 +5,10 @@ import { SecondarySectionTitle } from "../genericComponents/SecondarySectionTitl
 import { SectionsTitles } from "../genericComponents/SectionsTitles";
 import type { Props } from "../../pages/Home";
 
-export const OurProductSection = ({ setDisplayProduct }: Props) => {
+export const OurProductSection = ({
+  setDisplayProduct,
+  setDisplayRelatedProduct,
+}: Props) => {
   return (
     <section className="mt-16">
       <SecondarySectionTitle secondaryTitle="Our Products" />
@@ -70,6 +73,7 @@ export const OurProductSection = ({ setDisplayProduct }: Props) => {
                   originalProductPrice={originalProductPrice}
                   rating={rating}
                   setDisplayProduct={setDisplayProduct}
+                  setDisplayRelatedProduct={setDisplayRelatedProduct}
                 />
               </li>
             )

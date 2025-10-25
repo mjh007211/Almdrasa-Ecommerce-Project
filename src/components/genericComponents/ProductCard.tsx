@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { type ProductsData } from "../../productsData";
+import { useEffect, useState } from "react";
+import { allProductsData, type ProductsData } from "../../productsData";
 import { HeartIcon } from "../headerComponents/HeartIcon";
 import type { UserData } from "../../App";
 import { EyeIcon } from "./EyeIcon";
@@ -15,10 +15,25 @@ export const ProductCard = ({
   discountedProductPrice,
   rating,
   setDisplayProduct,
+  setDisplayRelatedProduct,
 }: ProductsData) => {
   const [isError, setIsError] = useState<
     "sameProduct" | "userNotFound" | "success" | null
   >(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    if (isError) {
+      setIsVisible(true);
+
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+        setIsError(null);
+      }, 2500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isError]);
 
   const navigator = useNavigate();
   const location = useLocation();
@@ -112,6 +127,13 @@ export const ProductCard = ({
       originalProductPrice,
       discountedProductPrice,
     };
+
+    const getRelatedProduct = allProductsData.filter(
+      (p) =>
+        p.category === product.category && p.productName !== product.productName
+    );
+
+    setDisplayRelatedProduct(getRelatedProduct);
     setDisplayProduct(product);
     navigator("/product");
   };
@@ -119,8 +141,12 @@ export const ProductCard = ({
   const styleEyeIcon = "right-4 top-4";
 
   return (
-    <div className="group relative">
-      <p className="absolute z-10 top-0 right-0 text-[13px] text-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+    <div className="relative">
+      <p
+        className={`absolute z-10 top-0 right-0 text-[13px] transition-opacity duration-500 text-red-600 ${
+          isVisible ? "opacity-100" : "opacity-0"
+        }`}
+      >
         {isError === "sameProduct" ? "Product already has been added." : ""}
         {isError === "userNotFound" ? "Sign in/Log in to add products." : ""}
         {isError === "success" ? (

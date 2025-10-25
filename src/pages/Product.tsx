@@ -2,18 +2,21 @@ import { ProductCard } from "../components/genericComponents/ProductCard";
 import { ButtonComponent } from "../components/genericComponents/ButtonComponent";
 import { SecondarySectionTitle } from "../components/genericComponents/SecondarySectionTitle";
 import { allProductsData, type ProductsData } from "../productsData";
-import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
 
 type Props = {
   displayProduct: ProductsData;
+  displayRelatedProduct: ProductsData;
   setDisplayProduct: Dispatch<SetStateAction<ProductsData>>;
+  setDisplayRelatedProduct: Dispatch<SetStateAction<ProductsData[]>>;
 };
 
-export const Product = ({ displayProduct, setDisplayProduct }: Props) => {
-  const [displayRelatedProduct, setDisplayRelatedProduct] = useState<
-    ProductsData[]
-  >([]);
-
+export const Product = ({
+  displayProduct,
+  displayRelatedProduct,
+  setDisplayProduct,
+  setDisplayRelatedProduct,
+}: Props) => {
   const handleDisplayRelatedProduct = () => {
     const getRelatedProduct = allProductsData.filter(
       (p) =>
@@ -27,8 +30,6 @@ export const Product = ({ displayProduct, setDisplayProduct }: Props) => {
   useEffect(() => {
     handleDisplayRelatedProduct();
   }, []);
-
-  console.log({ displayRelatedProduct });
 
   return (
     <section className="mt-16 mb-24">
@@ -431,12 +432,14 @@ export const Product = ({ displayProduct, setDisplayProduct }: Props) => {
               <li key={p.id}>
                 <ProductCard
                   discount={p.discount}
+                  category={p.category}
                   productImage={p.productImage}
                   productName={p.productName}
                   originalProductPrice={p.originalProductPrice}
                   discountedProductPrice={p.discountedProductPrice}
                   rating={p.rating}
                   setDisplayProduct={setDisplayProduct}
+                  setDisplayRelatedProduct={setDisplayRelatedProduct}
                 />
               </li>
             ))}

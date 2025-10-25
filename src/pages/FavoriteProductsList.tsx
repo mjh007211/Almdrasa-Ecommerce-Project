@@ -3,7 +3,11 @@ import type { UserData } from "../App";
 import { FavoriteProductCard } from "../components/favoriteComponents/FavoriteProductCard";
 import { SecondaryButtonComponent } from "../components/genericComponents/SecondaryButtonComponent";
 import { SecondarySectionTitle } from "../components/genericComponents/SecondarySectionTitle";
-import { justForYouData, type ProductsData } from "../productsData";
+import {
+  allProductsData,
+  justForYouData,
+  type ProductsData,
+} from "../productsData";
 import { ButtonComponent } from "../components/genericComponents/ButtonComponent";
 import { useNavigate } from "react-router";
 import { ProductCard } from "../components/genericComponents/ProductCard";
@@ -11,11 +15,13 @@ import { ProductCard } from "../components/genericComponents/ProductCard";
 type Props = {
   setActiveLink: Dispatch<SetStateAction<string>>;
   setDisplayProduct: Dispatch<SetStateAction<ProductsData>>;
+  setDisplayRelatedProduct: Dispatch<SetStateAction<ProductsData[]>>;
 };
 
 export const FavoriteProductsList = ({
   setActiveLink,
   setDisplayProduct,
+  setDisplayRelatedProduct,
 }: Props) => {
   const [userFavoriteList, setUserFavoriteList] = useState<ProductsData[]>([]);
   const [isError, setIsError] = useState(false);
@@ -40,6 +46,13 @@ export const FavoriteProductsList = ({
     navigator("/sign-up");
     setActiveLink("Sign Up");
   };
+
+  const getRandomProducts = () => {
+    const shuffled = [...allProductsData].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 4);
+  };
+
+  const justForYouData = getRandomProducts();
 
   return (
     <section className="mt-[60px] mb-28">
@@ -89,12 +102,14 @@ export const FavoriteProductsList = ({
             <li key={p.id}>
               <ProductCard
                 discount={p.discount}
+                category={p.category}
                 productImage={p.productImage}
                 productName={p.productName}
                 originalProductPrice={p.originalProductPrice}
                 discountedProductPrice={p.discountedProductPrice}
                 rating={p.rating}
                 setDisplayProduct={setDisplayProduct}
+                setDisplayRelatedProduct={setDisplayRelatedProduct}
               />
             </li>
           ))}

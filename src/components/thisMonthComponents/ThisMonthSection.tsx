@@ -6,7 +6,10 @@ import { SectionsTitles } from "../genericComponents/SectionsTitles";
 import speakers from "/3cc943ca7e210f637fc0504b7d93cd207df744c2.png";
 import type { Props } from "../../pages/Home";
 
-export const ThisMonthSection = ({ setDisplayProduct }: Props) => {
+export const ThisMonthSection = ({
+  setDisplayProduct,
+  setDisplayRelatedProduct,
+}: Props) => {
   return (
     <section className="mt-16">
       <SecondarySectionTitle secondaryTitle="This Month" />
@@ -36,6 +39,7 @@ export const ThisMonthSection = ({ setDisplayProduct }: Props) => {
                   discountedProductPrice={discountedProductPrice}
                   rating={rating}
                   setDisplayProduct={setDisplayProduct}
+                  setDisplayRelatedProduct={setDisplayRelatedProduct}
                 />
               </li>
             )

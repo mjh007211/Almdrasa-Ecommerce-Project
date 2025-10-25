@@ -7,6 +7,7 @@ import { HeartIcon } from "./HeartIcon";
 import type { UserData } from "../../App";
 import { MyAccountIcon } from "./MyAccountIcon";
 import { useNavigate } from "react-router";
+import { ButtonComponent } from "../genericComponents/ButtonComponent";
 
 export type Props = {
   activeLink?: string;
@@ -26,6 +27,11 @@ export const Header = ({
   setIsAllowToSignin,
 }: Props) => {
   const navigator = useNavigate();
+
+  const handleLoginNavigator = () => {
+    navigator("/login");
+    setActiveLink("");
+  };
   return (
     <header className="flex items-center justify-between mt-10">
       <HeaderTitle />
@@ -37,13 +43,20 @@ export const Header = ({
         </a>
 
         <CartIcon />
-        {isLogin && (
+        {isLogin ? (
           <MyAccountIcon
             setUserData={setUserData}
             setIsLogin={setIsLogin}
             setIsAllowToSignin={setIsAllowToSignin}
             setActiveLink={setActiveLink}
           />
+        ) : (
+          <a
+            onClick={handleLoginNavigator}
+            className="font-medium text-[#FAFAFA] bg-[#DB4444] rounded-[4px] py-1.5 px-4 text-center block cursor-pointer hover:bg-[#db4444a1] transition duration-300  hover:scale-105"
+          >
+            Login
+          </a>
         )}
       </div>
     </header>

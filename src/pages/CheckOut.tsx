@@ -1,13 +1,31 @@
 import { ButtonComponent } from "../components/genericComponents/ButtonComponent";
 import { SectionsTitles } from "../components/genericComponents/SectionsTitles";
-import controllerImage from "/5d5c2e5250752d55f8b60f2aa2923183dadbc135.png";
-import monitor from "/5e634682db5174aff99bb9337d2dc9598a0b44e4.png";
 import bkashImage from "/bacbff99a8fc8e50822cb2d2d168e5d0e8bf7ea6.png";
 import visaImage from "/cfb0a6ee01b240273b40dab07f8246ef98aed88a.png";
 import masterImage from "/6eefb61d27c754abac218d25d8ea4360de61f8e8.png";
 import nagadImage from "/b28e31b9c88d0c9b038b82deeb0523d82cffe267.png";
+import { useEffect, useState, type FormEvent } from "react";
+import type { ProductsData } from "../productsData";
+import type { UserData } from "../App";
+import { CheckOutProductsList } from "../components/checkoutComponents/CheckOutProductsList";
 
 export const CheckOut = () => {
+  const [userProducts, setUserProducts] = useState<ProductsData[]>([]);
+
+  useEffect(() => {
+    const getStoredUsers: UserData[] = JSON.parse(
+      localStorage.getItem("users") || "[]"
+    );
+
+    const findUser = getStoredUsers.find((u) => u.isLogin === true);
+
+    setUserProducts(findUser?.cart);
+  }, []);
+
+  const handleUserBillingDetails = (e: FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
     <section className="mt-[60px] mb-28">
       <div className="flex gap-3 text-[14px] text-[#0000003b]">
@@ -26,7 +44,10 @@ export const CheckOut = () => {
       </div>
       <div className="flex mt-10 justify-between">
         <div className="w-[470px]">
-          <div className="flex flex-col gap-6">
+          <form
+            onSubmit={(e) => handleUserBillingDetails(e)}
+            className="flex flex-col gap-6"
+          >
             <div className="flex flex-col gap-2 ">
               <label className="text-[#0000003b]">
                 First Name<span className="text-orange-600">*</span>
@@ -79,30 +100,22 @@ export const CheckOut = () => {
                 Save this information for faster check-out next time
               </p>
             </div>
-          </div>
+          </form>
         </div>
         <div className="pt-[32px]">
           <div className="w-[422px]">
-            <div className="flex flex-col gap-8">
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-5">
-                  <img className="w-[54px] h-[54px]" src={monitor} alt="" />
-                  <span>LCD Monitor</span>
-                </div>
-                <span>$650</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-5">
-                  <img
-                    className="w-[54px] h-[54px]"
-                    src={controllerImage}
-                    alt=""
+            <ul className="flex flex-col gap-8">
+              {userProducts?.map((p) => (
+                <li key={p.id}>
+                  <CheckOutProductsList
+                    productName={p.productName}
+                    productImage={p.productImage}
+                    originalProductPrice={p.originalProductPrice}
+                    discountedProductPrice={p.discountedProductPrice}
                   />
-                  <span>H1 Gamepad</span>
-                </div>
-                <span>$1100</span>
-              </div>
-            </div>
+                </li>
+              ))}
+            </ul>
             <div className="flex flex-col gap-5 mt-8">
               <div className="flex items-center justify-between border-b pb-2.5">
                 <span>Subtotal:</span>

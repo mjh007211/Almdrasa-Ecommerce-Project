@@ -9,18 +9,31 @@ import type { ProductsData } from "../productsData";
 
 export type Props = {
   setDisplayProduct: Dispatch<SetStateAction<ProductsData>>;
+  setDisplayRelatedProduct: Dispatch<SetStateAction<ProductsData[]>>;
 };
 
-export const Home = ({ setDisplayProduct }: Props) => {
+export const Home = ({
+  setDisplayProduct,
+  setDisplayRelatedProduct,
+}: Props) => {
   return (
     <div className="container max-w-[1170px] mx-auto font-Poppins">
       <MainSection />
-      <FlashSalesSection setDisplayProduct={setDisplayProduct} />
+      <FlashSalesSection
+        setDisplayProduct={setDisplayProduct}
+        setDisplayRelatedProduct={setDisplayRelatedProduct}
+      />
       <div className="h-[1px] bg-[#0000003b] w-[100%] mt-11"></div>
       <CategoriesSection />
       <div className="h-[1px] bg-[#0000003b] w-[100%] mt-11"></div>
-      <ThisMonthSection setDisplayProduct={setDisplayProduct} />
-      <OurProductSection setDisplayProduct={setDisplayProduct} />
+      <ThisMonthSection
+        setDisplayProduct={setDisplayProduct}
+        setDisplayRelatedProduct={setDisplayRelatedProduct}
+      />
+      <OurProductSection
+        setDisplayProduct={setDisplayProduct}
+        setDisplayRelatedProduct={setDisplayRelatedProduct}
+      />
       <FeaturedSection />
     </div>
   );

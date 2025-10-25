@@ -17,7 +17,7 @@ import ApplePlay from "/38932d5accb54c528f9bcf326ca48ea29bd6d890.png";
 import { ScrollToTop } from "./components/genericComponents/ScrollToTop";
 import { useEffect, useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import type { ProductsData } from "./productsData";
+import { allProductsData, type ProductsData } from "./productsData";
 
 const theme = createTheme({
   components: {
@@ -48,6 +48,8 @@ function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [isAllowToSignin, setIsAllowToSignin] = useState(true);
   const [displayProduct, setDisplayProduct] = useState<ProductsData>({});
+  const [displayRelatedProduct, setDisplayRelatedProduct] =
+    useState<ProductsData[]>(allProductsData);
 
   const getUsersFromLocalStorge = () => {
     const getStoredUsers: UserData[] = JSON.parse(
@@ -68,6 +70,8 @@ function App() {
   useEffect(() => {
     getUsersFromLocalStorge();
   }, []);
+
+  console.log({ displayRelatedProduct });
 
   return (
     <>
@@ -118,7 +122,7 @@ function App() {
                 element={
                   <Home
                     setDisplayProduct={setDisplayProduct}
-                    setUserData={setUserData}
+                    setDisplayRelatedProduct={setDisplayRelatedProduct}
                   />
                 }
               />
@@ -153,6 +157,7 @@ function App() {
                   <FavoriteProductsList
                     setDisplayProduct={setDisplayProduct}
                     setActiveLink={setActiveLink}
+                    setDisplayRelatedProduct={setDisplayRelatedProduct}
                   />
                 }
               />
@@ -172,7 +177,9 @@ function App() {
                 element={
                   <Product
                     displayProduct={displayProduct}
+                    displayRelatedProduct={displayRelatedProduct}
                     setDisplayProduct={setDisplayProduct}
+                    setDisplayRelatedProduct={setDisplayRelatedProduct}
                   />
                 }
               />
