@@ -47,6 +47,7 @@ function App() {
   );
   const [isLogin, setIsLogin] = useState(false);
   const [isAllowToSignin, setIsAllowToSignin] = useState(true);
+  const [displayProduct, setDisplayProduct] = useState<ProductsData>({});
 
   const getUsersFromLocalStorge = () => {
     const getStoredUsers: UserData[] = JSON.parse(
@@ -112,7 +113,15 @@ function App() {
             />
             <div className="h-[1px] w-[1440px] bg-[#0000003b]  absolute left-[50%] translate-x-[-50%] top-[142px]"></div>
             <Routes>
-              <Route path="/" element={<Home setUserData={setUserData} />} />
+              <Route
+                path="/"
+                element={
+                  <Home
+                    setDisplayProduct={setDisplayProduct}
+                    setUserData={setUserData}
+                  />
+                }
+              />
               <Route
                 path="/sign-up"
                 element={
@@ -140,7 +149,12 @@ function App() {
               />
               <Route
                 path="/favorite-list"
-                element={<FavoriteProductsList setActiveLink={setActiveLink} />}
+                element={
+                  <FavoriteProductsList
+                    setDisplayProduct={setDisplayProduct}
+                    setActiveLink={setActiveLink}
+                  />
+                }
               />
               <Route
                 path="/card"
@@ -153,7 +167,15 @@ function App() {
               />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/product" element={<Product />} />
+              <Route
+                path="/product"
+                element={
+                  <Product
+                    displayProduct={displayProduct}
+                    setDisplayProduct={setDisplayProduct}
+                  />
+                }
+              />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

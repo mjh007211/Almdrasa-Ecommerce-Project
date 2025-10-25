@@ -1,20 +1,27 @@
 import { useState } from "react";
-import type { ProductsData } from "../../productsData";
+import { type ProductsData } from "../../productsData";
 import { HeartIcon } from "../headerComponents/HeartIcon";
 import type { UserData } from "../../App";
+import { EyeIcon } from "./EyeIcon";
+import { useLocation, useNavigate } from "react-router";
 
 export const ProductCard = ({
   id,
+  category,
   productImage,
   productName,
   discount,
   originalProductPrice,
   discountedProductPrice,
   rating,
+  setDisplayProduct,
 }: ProductsData) => {
   const [isError, setIsError] = useState<
     "sameProduct" | "userNotFound" | "success" | null
   >(null);
+
+  const navigator = useNavigate();
+  const location = useLocation();
 
   const handleAddFavoriteProduct = () => {
     const getStoredUsers: UserData[] = JSON.parse(
@@ -97,6 +104,20 @@ export const ProductCard = ({
     setIsError("success");
   };
 
+  const handleDisplayProduct = () => {
+    const product: ProductsData = {
+      category,
+      productImage,
+      productName,
+      originalProductPrice,
+      discountedProductPrice,
+    };
+    setDisplayProduct(product);
+    navigator("/product");
+  };
+
+  const styleEyeIcon = "right-4 top-4";
+
   return (
     <div className="group relative">
       <p className="absolute z-10 top-0 right-0 text-[13px] text-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -120,37 +141,25 @@ export const ProductCard = ({
             <span className="text-[#FAFAFA]">- {discount}%</span>
           </div>
         )}
-
-        <div className="flex justify-center items-center w-[44px] h-[44px] rounded-full bg-white absolute right-4 top-4">
+        {location.pathname !== "/favorite-list" && (
           <button onClick={handleAddFavoriteProduct}>
-            <HeartIcon />
+            <div className="flex justify-center items-center w-[44px] h-[44px] rounded-full bg-white absolute right-4 top-4">
+              <HeartIcon />
+            </div>
           </button>
-        </div>
-        <div className="flex justify-center items-center w-[44px] h-[44px] rounded-full bg-white absolute right-4 top-18 cursor-pointer transition-transform duration-300 hover:scale-110">
-          <svg
-            width="22"
-            height="16"
-            viewBox="0 0 22 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M20.257 6.962C20.731 7.582 20.731 8.419 20.257 9.038C18.764 10.987 15.182 15 11 15C6.81801 15 3.23601 10.987 1.74301 9.038C1.51239 8.74113 1.38721 8.37592 1.38721 8C1.38721 7.62408 1.51239 7.25887 1.74301 6.962C3.23601 5.013 6.81801 1 11 1C15.182 1 18.764 5.013 20.257 6.962V6.962Z"
-              stroke="black"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M11 11C12.6569 11 14 9.65685 14 8C14 6.34315 12.6569 5 11 5C9.34315 5 8 6.34315 8 8C8 9.65685 9.34315 11 11 11Z"
-              stroke="black"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </div>
+        )}
 
+        <a onClick={handleDisplayProduct}>
+          <div
+            className={`flex justify-center items-center w-[44px] h-[44px] rounded-full bg-white absolute  cursor-pointer transition-transform duration-300 hover:scale-110 ${
+              location.pathname === "/favorite-list"
+                ? styleEyeIcon
+                : "right-4 top-18"
+            }`}
+          >
+            <EyeIcon />
+          </div>
+        </a>
         <img className="w-[162px] h-[142px]" src={productImage} alt="" />
         <div className="flex absolute bottom-0 left-0 justify-center bg-black w-[100%] opacity-0 group-hover:opacity-100 transition duration-300 rounded-b-[4px] py-2">
           <button
@@ -165,7 +174,9 @@ export const ProductCard = ({
       <div className="flex flex-col gap-2 font-medium mt-2.5">
         <h4>{productName}</h4>
         <div className="flex gap-2.5">
-          <span className="text-[#DB4444]">${discountedProductPrice}</span>
+          <span className="text-[#DB4444]">
+            ${discountedProductPrice ?? originalProductPrice}
+          </span>
           {discountedProductPrice ? (
             <span className="text-[#0000003b] line-through">
               ${originalProductPrice}

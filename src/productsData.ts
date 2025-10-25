@@ -1,5 +1,6 @@
 export type ProductsData = {
   id?: string;
+  category?: string;
   discount?: string;
   productImage: string;
   productName: string;
@@ -17,6 +18,7 @@ export const flashSalesProductsData: ProductsData[] = [
     originalProductPrice: 160,
     discountedProductPrice: 120,
     rating: "88",
+    category: "gaming",
   },
   {
     id: crypto.randomUUID(),
@@ -26,6 +28,7 @@ export const flashSalesProductsData: ProductsData[] = [
     originalProductPrice: 1160,
     discountedProductPrice: 960,
     rating: "75",
+    category: "gaming",
   },
   {
     id: crypto.randomUUID(),
@@ -35,15 +38,7 @@ export const flashSalesProductsData: ProductsData[] = [
     originalProductPrice: 400,
     discountedProductPrice: 370,
     rating: "99",
-  },
-  {
-    id: crypto.randomUUID(),
-    discount: "25",
-    productImage: "/288da330273c46e1c3dc0a8915c4b031d0345347.png",
-    productName: "S-Series Comfort Chair ",
-    originalProductPrice: 400,
-    discountedProductPrice: 375,
-    rating: "99",
+    category: "electronics",
   },
   {
     id: crypto.randomUUID(),
@@ -53,6 +48,15 @@ export const flashSalesProductsData: ProductsData[] = [
     originalProductPrice: 400,
     discountedProductPrice: 375,
     rating: "99",
+    category: "furniture",
+  },
+  {
+    id: crypto.randomUUID(),
+    productImage: "/faa80b609e3950aed9181acb44510f859f50d850.png",
+    productName: "PlayStation 5 Controller Skin High quality vinyl",
+    originalProductPrice: 192,
+    rating: "99",
+    category: "gaming",
   },
 ];
 
@@ -64,6 +68,7 @@ export const thisMonthProductsData: ProductsData[] = [
     originalProductPrice: 360,
     discountedProductPrice: 260,
     rating: "65",
+    category: "clothing",
   },
   {
     id: crypto.randomUUID(),
@@ -72,6 +77,7 @@ export const thisMonthProductsData: ProductsData[] = [
     originalProductPrice: 1160,
     discountedProductPrice: 960,
     rating: "65",
+    category: "accessories",
   },
   {
     id: crypto.randomUUID(),
@@ -80,13 +86,15 @@ export const thisMonthProductsData: ProductsData[] = [
     originalProductPrice: 170,
     discountedProductPrice: 160,
     rating: "65",
+    category: "electronics",
   },
   {
     id: crypto.randomUUID(),
     productImage: "/e86f6e872757d20a14861e2e0ebd4e9889693f59.png",
-    productName: "Small BookSelf",
+    productName: "Small BookShelf",
     originalProductPrice: 360,
     rating: "65",
+    category: "furniture",
   },
 ];
 
@@ -97,6 +105,7 @@ export const ourProductsData: ProductsData[] = [
     productName: "Breed Dry Dog Food",
     originalProductPrice: 100,
     rating: "35",
+    category: "pet",
   },
   {
     id: crypto.randomUUID(),
@@ -104,6 +113,7 @@ export const ourProductsData: ProductsData[] = [
     productName: "CANON EOS DSLR Camera",
     originalProductPrice: 360,
     rating: "95",
+    category: "electronics",
   },
   {
     id: crypto.randomUUID(),
@@ -111,6 +121,7 @@ export const ourProductsData: ProductsData[] = [
     productName: "ASUS FHD Gaming Laptop",
     originalProductPrice: 700,
     rating: "325",
+    category: "electronics",
   },
   {
     id: crypto.randomUUID(),
@@ -118,6 +129,7 @@ export const ourProductsData: ProductsData[] = [
     productName: "Curology Product Set",
     originalProductPrice: 500,
     rating: "145",
+    category: "beauty",
   },
   {
     id: crypto.randomUUID(),
@@ -125,6 +137,7 @@ export const ourProductsData: ProductsData[] = [
     productName: "Kids Electric Car",
     originalProductPrice: 960,
     rating: "65",
+    category: "toys",
   },
   {
     id: crypto.randomUUID(),
@@ -132,6 +145,7 @@ export const ourProductsData: ProductsData[] = [
     productName: "Jr. Zoom Soccer Cleats",
     originalProductPrice: 1160,
     rating: "35",
+    category: "sports",
   },
   {
     id: crypto.randomUUID(),
@@ -139,6 +153,7 @@ export const ourProductsData: ProductsData[] = [
     productName: "GP11 Shooter USB Gamepad",
     originalProductPrice: 660,
     rating: "55",
+    category: "gaming",
   },
   {
     id: crypto.randomUUID(),
@@ -146,6 +161,7 @@ export const ourProductsData: ProductsData[] = [
     productName: "Quilted Satin Jacket",
     originalProductPrice: 660,
     rating: "55",
+    category: "clothing",
   },
 ];
 
@@ -158,6 +174,7 @@ export const justForYouData: ProductsData[] = [
     originalProductPrice: 1160,
     discountedProductPrice: 960,
     rating: "65",
+    category: "electronics",
   },
   {
     id: crypto.randomUUID(),
@@ -165,6 +182,7 @@ export const justForYouData: ProductsData[] = [
     productName: "IPS LCD Gaming Monitor",
     originalProductPrice: 1160,
     rating: "65",
+    category: "electronics",
   },
   {
     id: crypto.randomUUID(),
@@ -172,6 +190,7 @@ export const justForYouData: ProductsData[] = [
     productName: "HAVIT HV-G92 Gamepad",
     originalProductPrice: 560,
     rating: "65",
+    category: "gaming",
   },
   {
     id: crypto.randomUUID(),
@@ -179,5 +198,12 @@ export const justForYouData: ProductsData[] = [
     productName: "AK-900 Wired Keyboard",
     originalProductPrice: 200,
     rating: "65",
+    category: "gaming",
   },
+];
+
+export const allProductsData: ProductsData[] = [
+  ...flashSalesProductsData,
+  ...thisMonthProductsData,
+  ...ourProductsData,
 ];

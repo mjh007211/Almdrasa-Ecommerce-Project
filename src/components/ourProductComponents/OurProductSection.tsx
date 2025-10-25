@@ -1,10 +1,11 @@
 import { ourProductsData } from "../../productsData";
-import { ProductCard } from "../flashSalesComponents/ProductCard";
+import { ProductCard } from "../genericComponents/ProductCard";
 import { ButtonComponent } from "../genericComponents/ButtonComponent";
 import { SecondarySectionTitle } from "../genericComponents/SecondarySectionTitle";
 import { SectionsTitles } from "../genericComponents/SectionsTitles";
+import type { Props } from "../../pages/Home";
 
-export const OurProductSection = () => {
+export const OurProductSection = ({ setDisplayProduct }: Props) => {
   return (
     <section className="mt-16">
       <SecondarySectionTitle secondaryTitle="Our Products" />
@@ -54,6 +55,7 @@ export const OurProductSection = () => {
           {ourProductsData.map(
             ({
               id,
+              category,
               productImage,
               productName,
               originalProductPrice,
@@ -62,10 +64,12 @@ export const OurProductSection = () => {
               <li key={id}>
                 <ProductCard
                   id={id}
+                  category={category}
                   productImage={productImage}
                   productName={productName}
                   originalProductPrice={originalProductPrice}
                   rating={rating}
+                  setDisplayProduct={setDisplayProduct}
                 />
               </li>
             )

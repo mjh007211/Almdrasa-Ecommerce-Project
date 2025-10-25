@@ -10,6 +10,7 @@ export const FavoriteProductCard = ({
   discountedProductPrice,
   rating,
   setUserFavoriteList,
+  setDisplayProduct,
 }: ProductsData) => {
   const handleRemoveFavoriteProduct = () => {
     const getStoredUsers: UserData[] = JSON.parse(

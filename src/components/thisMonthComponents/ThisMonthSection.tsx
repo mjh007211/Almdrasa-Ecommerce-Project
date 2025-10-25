@@ -1,11 +1,12 @@
 import { thisMonthProductsData } from "../../productsData";
-import { ProductCard } from "../flashSalesComponents/ProductCard";
+import { ProductCard } from "../genericComponents/ProductCard";
 import { ButtonComponent } from "../genericComponents/ButtonComponent";
 import { SecondarySectionTitle } from "../genericComponents/SecondarySectionTitle";
 import { SectionsTitles } from "../genericComponents/SectionsTitles";
 import speakers from "/3cc943ca7e210f637fc0504b7d93cd207df744c2.png";
+import type { Props } from "../../pages/Home";
 
-export const ThisMonthSection = () => {
+export const ThisMonthSection = ({ setDisplayProduct }: Props) => {
   return (
     <section className="mt-16">
       <SecondarySectionTitle secondaryTitle="This Month" />
@@ -18,6 +19,7 @@ export const ThisMonthSection = () => {
           {thisMonthProductsData.map(
             ({
               id,
+              category,
               productImage,
               productName,
               originalProductPrice,
@@ -27,11 +29,13 @@ export const ThisMonthSection = () => {
               <li key={id}>
                 <ProductCard
                   id={id}
+                  category={category}
                   productImage={productImage}
                   productName={productName}
                   originalProductPrice={originalProductPrice}
                   discountedProductPrice={discountedProductPrice}
                   rating={rating}
+                  setDisplayProduct={setDisplayProduct}
                 />
               </li>
             )

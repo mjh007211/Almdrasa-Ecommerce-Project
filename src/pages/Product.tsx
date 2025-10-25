@@ -1,21 +1,43 @@
-import { ProductCard } from "../components/flashSalesComponents/ProductCard";
+import { ProductCard } from "../components/genericComponents/ProductCard";
 import { ButtonComponent } from "../components/genericComponents/ButtonComponent";
 import { SecondarySectionTitle } from "../components/genericComponents/SecondarySectionTitle";
-import controllerChargerImage from "/14901ccade638588f27b571d7565fbaacfe57243.png";
-import controllerImage1 from "/ca92325b4d31381f7fe4841786f4511bd4849d87.png";
-import controllerImage2 from "/bdcffcaa9b23a76cbe02748d2090a0b9a11cf0a5.png";
-import controllerImage3 from "/f109e9cea445f7c73ec2a2153e0e149e85ee9d28.png";
-import controllerImage4 from "/faa80b609e3950aed9181acb44510f859f50d850.png";
+import { allProductsData, type ProductsData } from "../productsData";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 
-export const Product = () => {
+type Props = {
+  displayProduct: ProductsData;
+  setDisplayProduct: Dispatch<SetStateAction<ProductsData>>;
+};
+
+export const Product = ({ displayProduct, setDisplayProduct }: Props) => {
+  const [displayRelatedProduct, setDisplayRelatedProduct] = useState<
+    ProductsData[]
+  >([]);
+
+  const handleDisplayRelatedProduct = () => {
+    const getRelatedProduct = allProductsData.filter(
+      (p) =>
+        p.category === displayProduct.category &&
+        p.productName !== displayProduct.productName
+    );
+
+    setDisplayRelatedProduct(getRelatedProduct);
+  };
+
+  useEffect(() => {
+    handleDisplayRelatedProduct();
+  }, []);
+
+  console.log({ displayRelatedProduct });
+
   return (
     <section className="mt-16 mb-24">
       <div className="flex gap-3 text-[14px] text-[#0000003b]">
         <span>Account</span>
         <span>/</span>
-        <span>Gaming</span>
+        <span>{displayProduct.category}</span>
         <span>/</span>
-        <span className="text-black">Havic HV G-92 Gamepad</span>
+        <span className="text-black">{displayProduct.productName}</span>
       </div>
 
       <div className="flex justify-between mt-17">
@@ -24,28 +46,28 @@ export const Product = () => {
             <div className="w-[170px] h-[138px] bg-[#fafafa]">
               <img
                 className="w-full h-full object-cover"
-                src={controllerChargerImage}
+                src={displayProduct.productImage}
                 alt=""
               />
             </div>
             <div className="w-[170px] h-[138px] bg-[#fafafa]">
               <img
                 className="w-full h-full object-cover"
-                src={controllerImage1}
+                src={displayProduct.productImage}
                 alt=""
               />
             </div>
             <div className="w-[170px] h-[138px] bg-[#fafafa]">
               <img
                 className="w-full h-full object-cover"
-                src={controllerImage2}
+                src={displayProduct.productImage}
                 alt=""
               />
             </div>
             <div className="w-[170px] h-[138px] bg-[#fafafa]">
               <img
                 className="w-full h-full object-cover"
-                src={controllerImage3}
+                src={displayProduct.productImage}
                 alt=""
               />
             </div>
@@ -53,7 +75,7 @@ export const Product = () => {
           <div className="flex justify-center items-center w-[500px] h-[600px] bg-[#fafafa]">
             <img
               className="w-[446px] h-[315px]"
-              src={controllerImage4}
+              src={displayProduct.productImage}
               alt=""
             />
           </div>
@@ -61,7 +83,7 @@ export const Product = () => {
 
         <div className="w-[400px]">
           <div className="border-b pb-5">
-            <h3>Havic HV G-92 Gamepad</h3>
+            <h3>{displayProduct.productName}</h3>
             <div className="mt-2.5">
               <svg
                 width="290"
@@ -113,12 +135,18 @@ export const Product = () => {
             </div>
 
             <div className="mt-2.5 font-Inter text-2xl">
-              <span>$192.00</span>
+              <span>
+                $
+                {displayProduct.discountedProductPrice ??
+                  displayProduct.originalProductPrice}
+                .00
+              </span>
             </div>
             <p className="mt-5">
-              PlayStation 5 Controller Skin High quality vinyl with air channel
-              adhesive for easy bubble free install & mess free removal Pressure
-              sensitive.
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Cupiditate exercitationem quidem, natus nisi, hic quos aspernatur
+              architecto repellat, laudantium debitis voluptatibus! Eum,
+              perferendis eaque! Quibusdam sit autem ex distinctio suscipit!
             </p>
           </div>
 
@@ -393,14 +421,26 @@ export const Product = () => {
           </div>
         </div>
       </div>
-
       <div className="mt-37">
-        <SecondarySectionTitle secondaryTitle="Related Item" />
-        <div className="flex gap-8 mt-12">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+        {!displayRelatedProduct && (
+          <SecondarySectionTitle secondaryTitle="Related Item" />
+        )}
+        <div>
+          <ul className="grid grid-cols-[repeat(4,minmax(270px,1fr))] gap-8 mt-12">
+            {displayRelatedProduct?.map((p) => (
+              <li key={p.id}>
+                <ProductCard
+                  discount={p.discount}
+                  productImage={p.productImage}
+                  productName={p.productName}
+                  originalProductPrice={p.originalProductPrice}
+                  discountedProductPrice={p.discountedProductPrice}
+                  rating={p.rating}
+                  setDisplayProduct={setDisplayProduct}
+                />
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

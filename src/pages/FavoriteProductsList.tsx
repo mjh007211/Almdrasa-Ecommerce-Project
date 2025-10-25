@@ -1,18 +1,22 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import type { UserData } from "../App";
 import { FavoriteProductCard } from "../components/favoriteComponents/FavoriteProductCard";
-import { JustForYouProductCard } from "../components/favoriteComponents/JustForYouProductCard";
 import { SecondaryButtonComponent } from "../components/genericComponents/SecondaryButtonComponent";
 import { SecondarySectionTitle } from "../components/genericComponents/SecondarySectionTitle";
 import { justForYouData, type ProductsData } from "../productsData";
 import { ButtonComponent } from "../components/genericComponents/ButtonComponent";
 import { useNavigate } from "react-router";
+import { ProductCard } from "../components/genericComponents/ProductCard";
 
 type Props = {
   setActiveLink: Dispatch<SetStateAction<string>>;
+  setDisplayProduct: Dispatch<SetStateAction<ProductsData>>;
 };
 
-export const FavoriteProductsList = ({ setActiveLink }: Props) => {
+export const FavoriteProductsList = ({
+  setActiveLink,
+  setDisplayProduct,
+}: Props) => {
   const [userFavoriteList, setUserFavoriteList] = useState<ProductsData[]>([]);
   const [isError, setIsError] = useState(false);
   const navigator = useNavigate();
@@ -83,13 +87,14 @@ export const FavoriteProductsList = ({ setActiveLink }: Props) => {
         <ul className="flex gap-8 mt-12">
           {justForYouData.map((p) => (
             <li key={p.id}>
-              <JustForYouProductCard
+              <ProductCard
                 discount={p.discount}
                 productImage={p.productImage}
                 productName={p.productName}
                 originalProductPrice={p.originalProductPrice}
                 discountedProductPrice={p.discountedProductPrice}
                 rating={p.rating}
+                setDisplayProduct={setDisplayProduct}
               />
             </li>
           ))}

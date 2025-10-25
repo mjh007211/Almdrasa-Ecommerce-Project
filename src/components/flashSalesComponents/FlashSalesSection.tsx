@@ -1,13 +1,14 @@
 import { Arrows } from "../genericComponents/Arrows";
-import { ProductCard } from "./ProductCard";
+import { ProductCard } from "../genericComponents/ProductCard";
 import { SalesCountdownTimer } from "./SalesCountdownTimer";
 import { SecondarySectionTitle } from "../genericComponents/SecondarySectionTitle";
 import { SectionsTitles } from "../genericComponents/SectionsTitles";
 import { ButtonComponent } from "../genericComponents/ButtonComponent";
 import { useRef } from "react";
 import { flashSalesProductsData } from "../../productsData";
+import type { Props } from "../../pages/Home";
 
-export const FlashSalesSection = () => {
+export const FlashSalesSection = ({ setDisplayProduct }: Props) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: "left" | "right") => {
@@ -36,6 +37,7 @@ export const FlashSalesSection = () => {
           {flashSalesProductsData.map(
             ({
               id,
+              category,
               productImage,
               productName,
               discount,
@@ -46,12 +48,14 @@ export const FlashSalesSection = () => {
               <li key={id}>
                 <ProductCard
                   id={id}
+                  category={category}
                   productImage={productImage}
                   productName={productName}
                   discount={discount}
                   originalProductPrice={originalProductPrice}
                   discountedProductPrice={discountedProductPrice}
                   rating={rating}
+                  setDisplayProduct={setDisplayProduct}
                 />
               </li>
             )
