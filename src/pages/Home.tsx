@@ -10,11 +10,15 @@ import type { ProductsData } from "../productsData";
 export type Props = {
   setDisplayProduct: Dispatch<SetStateAction<ProductsData>>;
   setDisplayRelatedProduct: Dispatch<SetStateAction<ProductsData[]>>;
+  setCartBadge: Dispatch<SetStateAction<number | undefined>>;
+  setHeartBadge: Dispatch<SetStateAction<number | undefined>>;
 };
 
 export const Home = ({
   setDisplayProduct,
   setDisplayRelatedProduct,
+  setCartBadge,
+  setHeartBadge,
 }: Props) => {
   return (
     <div className="container max-w-[1170px] mx-auto font-Poppins">
@@ -22,6 +26,8 @@ export const Home = ({
       <FlashSalesSection
         setDisplayProduct={setDisplayProduct}
         setDisplayRelatedProduct={setDisplayRelatedProduct}
+        setCartBadge={setCartBadge}
+        setHeartBadge={setHeartBadge}
       />
       <div className="h-[1px] bg-[#0000003b] w-[100%] mt-11"></div>
       <CategoriesSection />
@@ -29,10 +35,14 @@ export const Home = ({
       <ThisMonthSection
         setDisplayProduct={setDisplayProduct}
         setDisplayRelatedProduct={setDisplayRelatedProduct}
+        setCartBadge={setCartBadge}
+        setHeartBadge={setHeartBadge}
       />
       <OurProductSection
         setDisplayProduct={setDisplayProduct}
         setDisplayRelatedProduct={setDisplayRelatedProduct}
+        setCartBadge={setCartBadge}
+        setHeartBadge={setHeartBadge}
       />
       <FeaturedSection />
     </div>

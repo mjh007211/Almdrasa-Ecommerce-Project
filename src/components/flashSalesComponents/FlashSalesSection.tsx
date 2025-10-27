@@ -11,6 +11,8 @@ import type { Props } from "../../pages/Home";
 export const FlashSalesSection = ({
   setDisplayProduct,
   setDisplayRelatedProduct,
+  setCartBadge,
+  setHeartBadge,
 }: Props) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -60,6 +62,8 @@ export const FlashSalesSection = ({
                   rating={rating}
                   setDisplayProduct={setDisplayProduct}
                   setDisplayRelatedProduct={setDisplayRelatedProduct}
+                  setCartBadge={setCartBadge}
+                  setHeartBadge={setHeartBadge}
                 />
               </li>
             )

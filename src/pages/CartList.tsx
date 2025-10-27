@@ -8,9 +8,10 @@ import { CartProductRow } from "../components/cartComponents/CartProductRow";
 
 type Props = {
   setActiveLink: Dispatch<SetStateAction<string>>;
+  setCartBadge: Dispatch<SetStateAction<number | undefined>>;
 };
 
-export const CartList = ({ setActiveLink }: Props) => {
+export const CartList = ({ setActiveLink, setCartBadge }: Props) => {
   const navigator = useNavigate();
   const [userCartList, setUserCartList] = useState<ProductsData[]>([]);
   const [isError, setIsError] = useState(false);
@@ -74,6 +75,7 @@ export const CartList = ({ setActiveLink }: Props) => {
                     originalProductPrice={p.originalProductPrice}
                     discountedProductPrice={p.discountedProductPrice}
                     setUserCartList={setUserCartList}
+                    setCartBadge={setCartBadge}
                   />
                 </tr>
               ))}

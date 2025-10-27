@@ -50,17 +50,26 @@ function App() {
   const [displayProduct, setDisplayProduct] = useState<ProductsData>({});
   const [displayRelatedProduct, setDisplayRelatedProduct] =
     useState<ProductsData[]>(allProductsData);
+  const [cartBadge, setCartBadge] = useState<number | undefined>(0);
+  const [heartBadge, setHeartBadge] = useState<number | undefined>(0);
 
-  const getUsersFromLocalStorge = () => {
+  const getUserDataFromLocalStorge = () => {
     const getStoredUsers: UserData[] = JSON.parse(
       localStorage.getItem("users") || "[]"
     );
+
+    const findUser = getStoredUsers.find((u) => u.isLogin === true);
+
+    const userCartLen = findUser?.cart.length;
+    const userFavoriteProductsLen = findUser?.favoriteProducts.length;
 
     const anyUserLogin = getStoredUsers.some((u) => u.isLogin === true);
 
     if (anyUserLogin) {
       setIsLogin(true);
       setIsAllowToSignin(false);
+      setCartBadge(userCartLen);
+      setHeartBadge(userFavoriteProductsLen);
     } else {
       setIsLogin(false);
       setIsAllowToSignin(true);
@@ -68,7 +77,7 @@ function App() {
   };
 
   useEffect(() => {
-    getUsersFromLocalStorge();
+    getUserDataFromLocalStorge();
   }, []);
 
   console.log({ displayRelatedProduct });
@@ -110,6 +119,8 @@ function App() {
             <Header
               activeLink={activeLink}
               isLogin={isLogin}
+              cartBadge={cartBadge}
+              heartBadge={heartBadge}
               setUserData={setUserData}
               setActiveLink={setActiveLink}
               setIsLogin={setIsLogin}
@@ -123,6 +134,8 @@ function App() {
                   <Home
                     setDisplayProduct={setDisplayProduct}
                     setDisplayRelatedProduct={setDisplayRelatedProduct}
+                    setCartBadge={setCartBadge}
+                    setHeartBadge={setHeartBadge}
                   />
                 }
               />
@@ -158,12 +171,19 @@ function App() {
                     setDisplayProduct={setDisplayProduct}
                     setActiveLink={setActiveLink}
                     setDisplayRelatedProduct={setDisplayRelatedProduct}
+                    setHeartBadge={setHeartBadge}
+                    setCartBadge={setCartBadge}
                   />
                 }
               />
               <Route
                 path="/card"
-                element={<CartList setActiveLink={setActiveLink} />}
+                element={
+                  <CartList
+                    setActiveLink={setActiveLink}
+                    setCartBadge={setCartBadge}
+                  />
+                }
               />
               <Route path="/check-out" element={<CheckOut />} />
               <Route
@@ -180,6 +200,8 @@ function App() {
                     displayRelatedProduct={displayRelatedProduct}
                     setDisplayProduct={setDisplayProduct}
                     setDisplayRelatedProduct={setDisplayRelatedProduct}
+                    setCartBadge={setCartBadge}
+                    setHeartBadge={setHeartBadge}
                   />
                 }
               />

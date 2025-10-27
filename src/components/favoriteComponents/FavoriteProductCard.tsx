@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import type { UserData } from "../../App";
 import type { ProductsData } from "../../productsData";
 
@@ -10,8 +11,26 @@ export const FavoriteProductCard = ({
   discountedProductPrice,
   rating,
   setUserFavoriteList,
-  setDisplayProduct,
+  setHeartBadge,
+  setCartBadge,
 }: ProductsData) => {
+  const [isError, setIsError] = useState<
+    "sameProduct" | "userNotFound" | "success" | null
+  >(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    if (isError) {
+      setIsVisible(true);
+
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+        setIsError(null);
+      }, 2500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isError]);
   const handleRemoveFavoriteProduct = () => {
     const getStoredUsers: UserData[] = JSON.parse(
       localStorage.getItem("users") || "[]"
@@ -39,8 +58,49 @@ export const FavoriteProductCard = ({
         : u
     );
 
+    setHeartBadge((prev: number) => prev - 1);
+
     localStorage.setItem("users", JSON.stringify(updateUsers));
     setUserFavoriteList(updateUserFavoriteProductList);
+  };
+
+  const handleAddProductCart = () => {
+    const getStoredUsers: UserData[] = JSON.parse(
+      localStorage.getItem("users") || "[]"
+    );
+
+    const findUser = getStoredUsers.find((u) => u.isLogin === true);
+
+    if (!findUser) {
+      setIsError("userNotFound");
+      return;
+    }
+
+    const isProductAdded = findUser.cart.some((p) => p.id === id);
+
+    if (isProductAdded) {
+      setIsError("sameProduct");
+      return;
+    }
+
+    const product: ProductsData = {
+      id,
+      productImage,
+      productName,
+      originalProductPrice,
+      discountedProductPrice,
+    };
+
+    const updateUserCart: ProductsData[] = [...findUser.cart, product];
+
+    const updateUsers: UserData[] = getStoredUsers.map((u) =>
+      u.isLogin === true ? { ...u, cart: updateUserCart } : u
+    );
+
+    setCartBadge((prev: number) => prev + 1);
+
+    localStorage.setItem("users", JSON.stringify(updateUsers));
+    setIsError("success");
   };
 
   return (
@@ -51,6 +111,19 @@ export const FavoriteProductCard = ({
             <span className="text-[#FAFAFA]">- {discount}%</span>
           </div>
         )}
+        <p
+          className={`absolute z-10 top-0 right-0 text-[13px] transition-opacity duration-500 text-red-600 ${
+            isVisible ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          {isError === "sameProduct" ? "Product already has been added." : ""}
+          {isError === "userNotFound" ? "Sign in/Log in to add products." : ""}
+          {isError === "success" ? (
+            <span className="text-green-500">Added successfully.</span>
+          ) : (
+            ""
+          )}
+        </p>
         <button onClick={handleRemoveFavoriteProduct}>
           <div className="flex justify-center items-center w-[44px] h-[44px] rounded-full bg-white absolute right-4 top-4 cursor-pointer transition-transform duration-300 hover:scale-105">
             <svg
@@ -73,7 +146,10 @@ export const FavoriteProductCard = ({
 
         <img className="w-[162px] h-[142px]" src={productImage} alt="" />
         <div className="flex absolute bottom-0 left-0 justify-center bg-black w-[100%] rounded-b-[4px] py-2">
-          <button className="font-medium text-[#ffffff] cursor-pointer">
+          <button
+            onClick={handleAddProductCart}
+            className="font-medium text-[#ffffff] cursor-pointer"
+          >
             Add To Cart
           </button>
         </div>

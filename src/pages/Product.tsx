@@ -6,9 +6,11 @@ import { useEffect, type Dispatch, type SetStateAction } from "react";
 
 type Props = {
   displayProduct: ProductsData;
-  displayRelatedProduct: ProductsData;
+  displayRelatedProduct: ProductsData[];
   setDisplayProduct: Dispatch<SetStateAction<ProductsData>>;
   setDisplayRelatedProduct: Dispatch<SetStateAction<ProductsData[]>>;
+  setHeartBadge: Dispatch<SetStateAction<number | undefined>>;
+  setCartBadge: Dispatch<SetStateAction<number | undefined>>;
 };
 
 export const Product = ({
@@ -16,6 +18,8 @@ export const Product = ({
   displayRelatedProduct,
   setDisplayProduct,
   setDisplayRelatedProduct,
+  setCartBadge,
+  setHeartBadge,
 }: Props) => {
   const handleDisplayRelatedProduct = () => {
     const getRelatedProduct = allProductsData.filter(
@@ -431,6 +435,7 @@ export const Product = ({
             {displayRelatedProduct?.map((p) => (
               <li key={p.id}>
                 <ProductCard
+                  id={p.id}
                   discount={p.discount}
                   category={p.category}
                   productImage={p.productImage}
@@ -440,6 +445,8 @@ export const Product = ({
                   rating={p.rating}
                   setDisplayProduct={setDisplayProduct}
                   setDisplayRelatedProduct={setDisplayRelatedProduct}
+                  setCartBadge={setCartBadge}
+                  setHeartBadge={setHeartBadge}
                 />
               </li>
             ))}

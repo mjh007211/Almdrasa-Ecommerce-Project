@@ -8,6 +8,8 @@ import type { Props } from "../../pages/Home";
 export const OurProductSection = ({
   setDisplayProduct,
   setDisplayRelatedProduct,
+  setCartBadge,
+  setHeartBadge,
 }: Props) => {
   return (
     <section className="mt-16">
@@ -74,6 +76,8 @@ export const OurProductSection = ({
                   rating={rating}
                   setDisplayProduct={setDisplayProduct}
                   setDisplayRelatedProduct={setDisplayRelatedProduct}
+                  setCartBadge={setCartBadge}
+                  setHeartBadge={setHeartBadge}
                 />
               </li>
             )

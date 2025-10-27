@@ -16,6 +16,8 @@ export const ProductCard = ({
   rating,
   setDisplayProduct,
   setDisplayRelatedProduct,
+  setCartBadge,
+  setHeartBadge,
 }: ProductsData) => {
   const [isError, setIsError] = useState<
     "sameProduct" | "userNotFound" | "success" | null
@@ -78,6 +80,8 @@ export const ProductCard = ({
         : u
     );
 
+    setHeartBadge((prev: number) => prev + 1);
+
     localStorage.setItem("users", JSON.stringify(updateUsers));
     setIsError("success");
   };
@@ -114,6 +118,8 @@ export const ProductCard = ({
     const updateUsers: UserData[] = getStoredUsers.map((u) =>
       u.isLogin === true ? { ...u, cart: updateUserCart } : u
     );
+
+    setCartBadge((prev: number) => prev + 1);
 
     localStorage.setItem("users", JSON.stringify(updateUsers));
     setIsError("success");
@@ -167,6 +173,7 @@ export const ProductCard = ({
             <span className="text-[#FAFAFA]">- {discount}%</span>
           </div>
         )}
+
         {location.pathname !== "/favorite-list" && (
           <button onClick={handleAddFavoriteProduct}>
             <div className="flex justify-center items-center w-[44px] h-[44px] rounded-full bg-white absolute right-4 top-4">

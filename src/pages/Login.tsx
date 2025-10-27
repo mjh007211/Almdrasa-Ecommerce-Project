@@ -32,6 +32,10 @@ export const Login = ({
   const emailOrPhoneRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
+  const userInvaildMessage = "Email/Passaword incorrect. Try again.";
+  const UserNotFoundMessage =
+    "Sorry, there is no user registered with the entered email/phone. Try again.";
+
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
     const getStoredUsers: UserData[] = JSON.parse(
@@ -83,7 +87,7 @@ export const Login = ({
         <p className="mt-5">Enter your details below</p>
         <form
           onSubmit={(e) => handleLogin(e)}
-          className="flex flex-col gap-10 mt-12"
+          className="relative flex flex-col gap-10 mt-12"
         >
           <TextField
             sx={{ width: "100%" }}
@@ -106,27 +110,16 @@ export const Login = ({
             name="password"
             onChange={() => setIsError(null)}
           />
-          {isError === "invalidUser" ? (
-            <p className=" text-red-600">
-              Email/Passaword incorrect. Try again.
-            </p>
-          ) : (
-            ""
-          )}
-          {isError === "userNotFound" ? (
-            <p className=" text-red-600">
-              Sorry, there is no user registered with the entered email/phone.
-              Try again.
-            </p>
-          ) : (
-            ""
-          )}
           <div className="flex items-center justify-between">
             <ButtonComponent text="Log In" width={143} />
             <span className="text-[#DB4444] cursor-pointer">
               Forget Password?
             </span>
           </div>
+          <p className="absolute left-0 -bottom-13 text-[14px] text-red-600">
+            {isError === "invalidUser" ? userInvaildMessage : ""}
+            {isError === "userNotFound" ? UserNotFoundMessage : ""}
+          </p>
         </form>
       </div>
     </section>

@@ -9,6 +9,8 @@ import type { Props } from "../../pages/Home";
 export const ThisMonthSection = ({
   setDisplayProduct,
   setDisplayRelatedProduct,
+  setCartBadge,
+  setHeartBadge,
 }: Props) => {
   return (
     <section className="mt-16">
@@ -40,6 +42,8 @@ export const ThisMonthSection = ({
                   rating={rating}
                   setDisplayProduct={setDisplayProduct}
                   setDisplayRelatedProduct={setDisplayRelatedProduct}
+                  setCartBadge={setCartBadge}
+                  setHeartBadge={setHeartBadge}
                 />
               </li>
             )

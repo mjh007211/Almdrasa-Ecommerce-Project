@@ -1,6 +1,16 @@
-export const HeartIcon = () => {
+type Props = {
+  isLogin: boolean | undefined;
+  heartBadge: number | undefined;
+};
+
+export const HeartIcon = ({ isLogin, heartBadge }: Props) => {
   return (
-    <div className="cursor-pointer transition-transform duration-300 hover:scale-110">
+    <div className="relative cursor-pointer transition-transform duration-300 hover:scale-110">
+      {isLogin && (
+        <div className="absolute text-center right-0 top-0 w-[16px] h-[16px] rounded-full bg-[#DB4444] text-[#FAFAFA] text-[12px]">
+          {heartBadge}
+        </div>
+      )}
       <svg
         width="32"
         height="32"

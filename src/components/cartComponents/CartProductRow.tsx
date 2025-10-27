@@ -9,6 +9,7 @@ export const CartProductRow = ({
   originalProductPrice,
   discountedProductPrice,
   setUserCartList,
+  setCartBadge,
 }: ProductsData) => {
   const [productSubTotal, setProductSubTotal] = useState(
     discountedProductPrice ?? originalProductPrice
@@ -54,6 +55,8 @@ export const CartProductRow = ({
           }
         : u
     );
+
+    setCartBadge((prev: number) => prev - 1);
 
     localStorage.setItem("users", JSON.stringify(updateUsers));
     setUserCartList(updateUserProductCart);

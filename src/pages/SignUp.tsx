@@ -41,21 +41,12 @@ export const SignUp = ({
 
   console.log({ isAllowToSignin });
 
-  const userNameExistMessage = (
-    <p className="text-[14px] text-red-700">
-      Username already been taken. Try again.
-    </p>
-  );
+  const userNameExistMessage = "Username already been taken. Try again.";
 
-  const userEmailOrPhoneExistMessage = (
-    <p className="text-[14px] text-red-700">
-      Someone already been registred with this email. Try again.
-    </p>
-  );
+  const userEmailOrPhoneExistMessage =
+    "Someone already been registred with this email. Try again.";
 
-  const UserAlreadyLoginMessage = (
-    <p className="text-[14px] text-red-700">Log out first.</p>
-  );
+  const UserAlreadyLoginMessage = "Log out first.";
 
   const handleOnSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -128,7 +119,7 @@ export const SignUp = ({
           onSubmit={(e) => handleOnSubmit(e)}
           className="flex flex-col gap-10 mt-12"
         >
-          <div className="flex flex-col gap-2">
+          <div className="relative">
             <TextField
               sx={{ width: "100%" }}
               label="Name"
@@ -137,9 +128,11 @@ export const SignUp = ({
               inputRef={userNameRef}
               onChange={() => setUserExistData(null)}
             />
-            {userExistData === "username" ? userNameExistMessage : ""}
+            <p className="absolute left-0 -bottom-7 text-[14px] text-red-700">
+              {userExistData === "username" ? userNameExistMessage : ""}
+            </p>
           </div>
-          <div>
+          <div className="relative">
             <TextField
               sx={{ width: "100%" }}
               label="Email or phone number"
@@ -148,9 +141,11 @@ export const SignUp = ({
               inputRef={emailOrPhoneRef}
               onChange={() => setUserExistData(null)}
             />
-            {userExistData === "emailOrPhone"
-              ? userEmailOrPhoneExistMessage
-              : ""}{" "}
+            <p className="absolute left-0 -bottom-7 text-[14px] text-red-700">
+              {userExistData === "emailOrPhone"
+                ? userEmailOrPhoneExistMessage
+                : ""}
+            </p>
           </div>
           <div>
             <TextField
@@ -213,15 +208,17 @@ export const SignUp = ({
             </defs>
           </svg>
         </form>
-        <div className="flex gap-4 mt-10">
+        <div className="relative flex gap-4 mt-10">
           <p className="text-center">Already have account?</p>
           <span className="font-medium border-b pb-1.5">
             <a className="cursor-pointer" onClick={loginPermession}>
               Log in
             </a>
           </span>
+          <p className="absolute left-0 -bottom-8 text-[14px] text-red-700">
+            {isUserlogin && UserAlreadyLoginMessage}
+          </p>
         </div>
-        {isUserlogin && UserAlreadyLoginMessage}
       </div>
     </section>
   );

@@ -1,13 +1,24 @@
 import { useNavigate } from "react-router";
 
-export const CartIcon = () => {
+type Props = {
+  isLogin: boolean | undefined;
+  cartBadge: number | undefined;
+};
+
+export const CartIcon = ({ isLogin, cartBadge }: Props) => {
   const navigator = useNavigate();
 
   return (
     <a
-      className="cursor-pointer transition-transform duration-300 hover:scale-110"
+      className="relative cursor-pointer transition-transform duration-300 hover:scale-110"
       onClick={() => navigator("/card")}
     >
+      {isLogin && (
+        <div className="absolute flex items-center justify-center right-0 top-0 w-[16px] h-[16px] rounded-full bg-[#DB4444] text-[#FAFAFA] text-[12px]">
+          {cartBadge}
+        </div>
+      )}
+
       <svg
         width="32"
         height="32"

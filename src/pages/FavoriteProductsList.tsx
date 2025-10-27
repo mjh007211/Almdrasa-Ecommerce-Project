@@ -3,11 +3,7 @@ import type { UserData } from "../App";
 import { FavoriteProductCard } from "../components/favoriteComponents/FavoriteProductCard";
 import { SecondaryButtonComponent } from "../components/genericComponents/SecondaryButtonComponent";
 import { SecondarySectionTitle } from "../components/genericComponents/SecondarySectionTitle";
-import {
-  allProductsData,
-  justForYouData,
-  type ProductsData,
-} from "../productsData";
+import { allProductsData, type ProductsData } from "../productsData";
 import { ButtonComponent } from "../components/genericComponents/ButtonComponent";
 import { useNavigate } from "react-router";
 import { ProductCard } from "../components/genericComponents/ProductCard";
@@ -16,15 +12,20 @@ type Props = {
   setActiveLink: Dispatch<SetStateAction<string>>;
   setDisplayProduct: Dispatch<SetStateAction<ProductsData>>;
   setDisplayRelatedProduct: Dispatch<SetStateAction<ProductsData[]>>;
+  setHeartBadge: Dispatch<SetStateAction<number | undefined>>;
+  setCartBadge: Dispatch<SetStateAction<number | undefined>>;
 };
 
 export const FavoriteProductsList = ({
   setActiveLink,
   setDisplayProduct,
   setDisplayRelatedProduct,
+  setHeartBadge,
+  setCartBadge,
 }: Props) => {
   const [userFavoriteList, setUserFavoriteList] = useState<ProductsData[]>([]);
   const [isError, setIsError] = useState(false);
+  const [justForYouData, setJustForYouData] = useState<ProductsData[]>([]);
   const navigator = useNavigate();
 
   useEffect(() => {
@@ -47,12 +48,10 @@ export const FavoriteProductsList = ({
     setActiveLink("Sign Up");
   };
 
-  const getRandomProducts = () => {
+  useEffect(() => {
     const shuffled = [...allProductsData].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 4);
-  };
-
-  const justForYouData = getRandomProducts();
+    setJustForYouData(shuffled.slice(0, 4));
+  }, []);
 
   return (
     <section className="mt-[60px] mb-28">
@@ -82,6 +81,8 @@ export const FavoriteProductsList = ({
                     discountedProductPrice={p.discountedProductPrice}
                     rating={p.rating}
                     setUserFavoriteList={setUserFavoriteList}
+                    setHeartBadge={setHeartBadge}
+                    setCartBadge={setCartBadge}
                   />
                 </li>
               ))}
@@ -101,6 +102,7 @@ export const FavoriteProductsList = ({
           {justForYouData.map((p) => (
             <li key={p.id}>
               <ProductCard
+                id={p.id}
                 discount={p.discount}
                 category={p.category}
                 productImage={p.productImage}
@@ -110,6 +112,7 @@ export const FavoriteProductsList = ({
                 rating={p.rating}
                 setDisplayProduct={setDisplayProduct}
                 setDisplayRelatedProduct={setDisplayRelatedProduct}
+                setCartBadge={setCartBadge}
               />
             </li>
           ))}

@@ -7,11 +7,12 @@ import { HeartIcon } from "./HeartIcon";
 import type { UserData } from "../../App";
 import { MyAccountIcon } from "./MyAccountIcon";
 import { useNavigate } from "react-router";
-import { ButtonComponent } from "../genericComponents/ButtonComponent";
 
 export type Props = {
   activeLink?: string;
   isLogin?: boolean;
+  cartBadge: number | undefined;
+  heartBadge: number | undefined;
   setUserData?: Dispatch<SetStateAction<UserData[]>>;
   setActiveLink?: Dispatch<SetStateAction<string>>;
   setIsLogin?: Dispatch<SetStateAction<boolean>>;
@@ -21,6 +22,8 @@ export type Props = {
 export const Header = ({
   activeLink,
   isLogin,
+  cartBadge,
+  heartBadge,
   setUserData,
   setActiveLink,
   setIsLogin,
@@ -39,10 +42,10 @@ export const Header = ({
       <div className="flex gap-5">
         <HeaderInput />
         <a onClick={() => navigator("/favorite-list")}>
-          <HeartIcon />
+          <HeartIcon isLogin={isLogin} heartBadge={heartBadge} />
         </a>
 
-        <CartIcon />
+        <CartIcon isLogin={isLogin} cartBadge={cartBadge} />
         {isLogin ? (
           <MyAccountIcon
             setUserData={setUserData}
