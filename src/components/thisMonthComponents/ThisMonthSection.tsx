@@ -4,14 +4,8 @@ import { ButtonComponent } from "../genericComponents/ButtonComponent";
 import { SecondarySectionTitle } from "../genericComponents/SecondarySectionTitle";
 import { SectionsTitles } from "../genericComponents/SectionsTitles";
 import speakers from "/3cc943ca7e210f637fc0504b7d93cd207df744c2.png";
-import type { Props } from "../../pages/Home";
 
-export const ThisMonthSection = ({
-  setDisplayProduct,
-  setDisplayRelatedProduct,
-  setCartBadge,
-  setHeartBadge,
-}: Props) => {
+export const ThisMonthSection = () => {
   return (
     <section className="mt-16">
       <SecondarySectionTitle secondaryTitle="This Month" />
@@ -40,10 +34,6 @@ export const ThisMonthSection = ({
                   originalProductPrice={originalProductPrice}
                   discountedProductPrice={discountedProductPrice}
                   rating={rating}
-                  setDisplayProduct={setDisplayProduct}
-                  setDisplayRelatedProduct={setDisplayRelatedProduct}
-                  setCartBadge={setCartBadge}
-                  setHeartBadge={setHeartBadge}
                 />
               </li>
             )

@@ -2,28 +2,11 @@ import TextField from "@mui/material/TextField";
 import { ButtonComponent } from "../components/genericComponents/ButtonComponent";
 import signinImage from "/75f394c0a1c7dc5b68a42239311e510f54d8cd59.jpg";
 import type { UserData } from "../App";
-import {
-  useRef,
-  useState,
-  type Dispatch,
-  type FormEvent,
-  type SetStateAction,
-} from "react";
+import { useContext, useRef, useState, type FormEvent } from "react";
 import { useNavigate } from "react-router";
+import { DataContext } from "../context/DataContext";
 
-type Props = {
-  setUserData: Dispatch<SetStateAction<UserData[]>>;
-  setIsLogin: Dispatch<SetStateAction<boolean>>;
-  setActiveLink: Dispatch<SetStateAction<string>>;
-  setIsAllowToSignin: Dispatch<SetStateAction<boolean>>;
-};
-
-export const Login = ({
-  setUserData,
-  setIsLogin,
-  setActiveLink,
-  setIsAllowToSignin,
-}: Props) => {
+export const Login = () => {
   const navigator = useNavigate();
 
   const [isError, setIsError] = useState<"userNotFound" | "invalidUser" | null>(
@@ -31,6 +14,8 @@ export const Login = ({
   );
   const emailOrPhoneRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const { setActiveLink, setUserData, setIsAllowToSignin, setIsLogin } =
+    useContext(DataContext);
 
   const userInvaildMessage = "Email/Passaword incorrect. Try again.";
   const UserNotFoundMessage =

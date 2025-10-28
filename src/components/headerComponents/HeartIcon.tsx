@@ -1,9 +1,9 @@
-type Props = {
-  isLogin: boolean | undefined;
-  heartBadge: number | undefined;
-};
+import { useContext } from "react";
+import { DataContext } from "../../context/DataContext";
 
-export const HeartIcon = ({ isLogin, heartBadge }: Props) => {
+export const HeartIcon = () => {
+  const { heartBadge, isLogin } = useContext(DataContext);
+
   return (
     <div className="relative cursor-pointer transition-transform duration-300 hover:scale-110">
       {isLogin && (

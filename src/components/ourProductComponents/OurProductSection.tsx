@@ -3,14 +3,8 @@ import { ProductCard } from "../genericComponents/ProductCard";
 import { ButtonComponent } from "../genericComponents/ButtonComponent";
 import { SecondarySectionTitle } from "../genericComponents/SecondarySectionTitle";
 import { SectionsTitles } from "../genericComponents/SectionsTitles";
-import type { Props } from "../../pages/Home";
 
-export const OurProductSection = ({
-  setDisplayProduct,
-  setDisplayRelatedProduct,
-  setCartBadge,
-  setHeartBadge,
-}: Props) => {
+export const OurProductSection = () => {
   return (
     <section className="mt-16">
       <SecondarySectionTitle secondaryTitle="Our Products" />
@@ -74,10 +68,6 @@ export const OurProductSection = ({
                   productName={productName}
                   originalProductPrice={originalProductPrice}
                   rating={rating}
-                  setDisplayProduct={setDisplayProduct}
-                  setDisplayRelatedProduct={setDisplayRelatedProduct}
-                  setCartBadge={setCartBadge}
-                  setHeartBadge={setHeartBadge}
                 />
               </li>
             )

@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { allProductsData, type ProductsData } from "../../productsData";
 import { HeartIcon } from "../headerComponents/HeartIcon";
 import type { UserData } from "../../App";
 import { EyeIcon } from "./EyeIcon";
 import { useLocation, useNavigate } from "react-router";
+import { DataContext } from "../../context/DataContext";
 
 export const ProductCard = ({
   id,
@@ -14,15 +15,17 @@ export const ProductCard = ({
   originalProductPrice,
   discountedProductPrice,
   rating,
-  setDisplayProduct,
-  setDisplayRelatedProduct,
-  setCartBadge,
-  setHeartBadge,
 }: ProductsData) => {
   const [isError, setIsError] = useState<
     "sameProduct" | "userNotFound" | "success" | null
   >(null);
   const [isVisible, setIsVisible] = useState(false);
+  const {
+    setCartBadge,
+    setHeartBadge,
+    setDisplayProduct,
+    setDisplayRelatedProduct,
+  } = useContext(DataContext);
 
   useEffect(() => {
     if (isError) {
@@ -52,7 +55,9 @@ export const ProductCard = ({
       return;
     }
 
-    const isProductAdded = findUser.favoriteProducts.some((p) => p.id === id);
+    const isProductAdded = findUser.favoriteProducts.some(
+      (p) => p.productName === productName
+    );
 
     if (isProductAdded) {
       setIsError("sameProduct");
@@ -98,7 +103,9 @@ export const ProductCard = ({
       return;
     }
 
-    const isProductAdded = findUser.cart.some((p) => p.id === id);
+    const isProductAdded = findUser.cart.some(
+      (p) => p.productName === productName
+    );
 
     if (isProductAdded) {
       setIsError("sameProduct");
@@ -176,8 +183,22 @@ export const ProductCard = ({
 
         {location.pathname !== "/favorite-list" && (
           <button onClick={handleAddFavoriteProduct}>
-            <div className="flex justify-center items-center w-[44px] h-[44px] rounded-full bg-white absolute right-4 top-4">
-              <HeartIcon />
+            <div className="flex justify-center items-center w-[44px] h-[44px] rounded-full bg-white absolute right-4 top-4 cursor-pointer transition-transform duration-300 hover:scale-110">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 5C5.7912 5 4 6.73964 4 8.88594C4 10.6185 4.7 14.7305 11.5904 18.8873C11.7138 18.961 11.8555 19 12 19C12.1445 19 12.2862 18.961 12.4096 18.8873C19.3 14.7305 20 10.6185 20 8.88594C20 6.73964 18.2088 5 16 5C13.7912 5 12 7.35511 12 7.35511C12 7.35511 10.2088 5 8 5Z"
+                  stroke="black"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </div>
           </button>
         )}

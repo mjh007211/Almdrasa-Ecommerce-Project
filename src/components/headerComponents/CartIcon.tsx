@@ -1,12 +1,10 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router";
+import { DataContext } from "../../context/DataContext";
 
-type Props = {
-  isLogin: boolean | undefined;
-  cartBadge: number | undefined;
-};
-
-export const CartIcon = ({ isLogin, cartBadge }: Props) => {
+export const CartIcon = () => {
   const navigator = useNavigate();
+  const { cartBadge, isLogin } = useContext(DataContext);
 
   return (
     <a

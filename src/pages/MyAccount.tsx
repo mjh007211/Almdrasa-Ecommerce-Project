@@ -1,11 +1,9 @@
-import type { UserData } from "../App";
+import { useContext } from "react";
 import { ButtonComponent } from "../components/genericComponents/ButtonComponent";
+import { DataContext } from "../context/DataContext";
 
-type Props = {
-  userData: UserData[];
-};
-
-export const MyAccount = ({ userData }: Props) => {
+export const MyAccount = () => {
+  const { userData } = useContext(DataContext);
   const loginUser = userData.find((u) => u.isLogin === true);
   const loginUserName = loginUser?.userName;
   return (

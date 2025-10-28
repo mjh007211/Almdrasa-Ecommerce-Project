@@ -1,4 +1,4 @@
-import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
+import { useContext, useEffect, useState } from "react";
 import type { UserData } from "../App";
 import { FavoriteProductCard } from "../components/favoriteComponents/FavoriteProductCard";
 import { SecondaryButtonComponent } from "../components/genericComponents/SecondaryButtonComponent";
@@ -7,26 +7,14 @@ import { allProductsData, type ProductsData } from "../productsData";
 import { ButtonComponent } from "../components/genericComponents/ButtonComponent";
 import { useNavigate } from "react-router";
 import { ProductCard } from "../components/genericComponents/ProductCard";
+import { DataContext } from "../context/DataContext";
 
-type Props = {
-  setActiveLink: Dispatch<SetStateAction<string>>;
-  setDisplayProduct: Dispatch<SetStateAction<ProductsData>>;
-  setDisplayRelatedProduct: Dispatch<SetStateAction<ProductsData[]>>;
-  setHeartBadge: Dispatch<SetStateAction<number | undefined>>;
-  setCartBadge: Dispatch<SetStateAction<number | undefined>>;
-};
-
-export const FavoriteProductsList = ({
-  setActiveLink,
-  setDisplayProduct,
-  setDisplayRelatedProduct,
-  setHeartBadge,
-  setCartBadge,
-}: Props) => {
+export const FavoriteProductsList = () => {
   const [userFavoriteList, setUserFavoriteList] = useState<ProductsData[]>([]);
   const [isError, setIsError] = useState(false);
   const [justForYouData, setJustForYouData] = useState<ProductsData[]>([]);
   const navigator = useNavigate();
+  const { setActiveLink } = useContext(DataContext);
 
   useEffect(() => {
     const getStoredUsers: UserData[] = JSON.parse(
@@ -55,8 +43,12 @@ export const FavoriteProductsList = ({
 
   return (
     <section className="mt-[60px] mb-28">
+      <div className="flex gap-3 text-[14px]">
+        <span className="text-[#0000003b]">Home</span> <span>/</span>
+        Favorite list
+      </div>
       {isError ? (
-        <div className="flex flex-col gap-2.5">
+        <div className="flex flex-col gap-2.5 mt-5">
           <p>Sign up/Log in to see/add your favorite products.</p>
           <a onClick={handleNavigate}>
             <ButtonComponent text="Sign up/Log in" width={159} />
@@ -80,9 +72,6 @@ export const FavoriteProductsList = ({
                     originalProductPrice={p.originalProductPrice}
                     discountedProductPrice={p.discountedProductPrice}
                     rating={p.rating}
-                    setUserFavoriteList={setUserFavoriteList}
-                    setHeartBadge={setHeartBadge}
-                    setCartBadge={setCartBadge}
                   />
                 </li>
               ))}
@@ -90,34 +79,34 @@ export const FavoriteProductsList = ({
           </div>
         </div>
       ) : (
-        <p>Favorite product list is empty</p>
+        <p className="mt-5">Favorite product list is empty</p>
       )}
-
-      <div className="flex items-center justify-between mt-14">
-        <SecondarySectionTitle secondaryTitle="Just For You" />
-        <SecondaryButtonComponent text="See All" width={150} />
-      </div>
-      <div>
-        <ul className="flex gap-8 mt-12">
-          {justForYouData.map((p) => (
-            <li key={p.id}>
-              <ProductCard
-                id={p.id}
-                discount={p.discount}
-                category={p.category}
-                productImage={p.productImage}
-                productName={p.productName}
-                originalProductPrice={p.originalProductPrice}
-                discountedProductPrice={p.discountedProductPrice}
-                rating={p.rating}
-                setDisplayProduct={setDisplayProduct}
-                setDisplayRelatedProduct={setDisplayRelatedProduct}
-                setCartBadge={setCartBadge}
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
+      {!isError && (
+        <div>
+          <div className="flex items-center justify-between mt-14">
+            <SecondarySectionTitle secondaryTitle="Just For You" />
+            <SecondaryButtonComponent text="See All" width={150} />
+          </div>
+          <div>
+            <ul className="flex gap-8 mt-12">
+              {justForYouData.map((p) => (
+                <li key={p.id}>
+                  <ProductCard
+                    id={p.id}
+                    discount={p.discount}
+                    category={p.category}
+                    productImage={p.productImage}
+                    productName={p.productName}
+                    originalProductPrice={p.originalProductPrice}
+                    discountedProductPrice={p.discountedProductPrice}
+                    rating={p.rating}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

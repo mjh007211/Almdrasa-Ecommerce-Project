@@ -1,35 +1,16 @@
-import type { Dispatch, SetStateAction } from "react";
+import { useContext } from "react";
 import { CartIcon } from "./CartIcon";
 import { HeaderInput } from "./HeaderInput";
 import { HeaderNav } from "./HeaderNav";
 import { HeaderTitle } from "./HeaderTitlte";
 import { HeartIcon } from "./HeartIcon";
-import type { UserData } from "../../App";
 import { MyAccountIcon } from "./MyAccountIcon";
 import { useNavigate } from "react-router";
+import { DataContext } from "../../context/DataContext";
 
-export type Props = {
-  activeLink?: string;
-  isLogin?: boolean;
-  cartBadge: number | undefined;
-  heartBadge: number | undefined;
-  setUserData?: Dispatch<SetStateAction<UserData[]>>;
-  setActiveLink?: Dispatch<SetStateAction<string>>;
-  setIsLogin?: Dispatch<SetStateAction<boolean>>;
-  setIsAllowToSignin?: Dispatch<SetStateAction<boolean>>;
-};
-
-export const Header = ({
-  activeLink,
-  isLogin,
-  cartBadge,
-  heartBadge,
-  setUserData,
-  setActiveLink,
-  setIsLogin,
-  setIsAllowToSignin,
-}: Props) => {
+export const Header = () => {
   const navigator = useNavigate();
+  const { setActiveLink, isLogin } = useContext(DataContext);
 
   const handleLoginNavigator = () => {
     navigator("/login");
@@ -38,21 +19,16 @@ export const Header = ({
   return (
     <header className="flex items-center justify-between mt-10">
       <HeaderTitle />
-      <HeaderNav activeLink={activeLink} setActiveLink={setActiveLink} />
+      <HeaderNav />
       <div className="flex gap-5">
         <HeaderInput />
         <a onClick={() => navigator("/favorite-list")}>
-          <HeartIcon isLogin={isLogin} heartBadge={heartBadge} />
+          <HeartIcon />
         </a>
 
-        <CartIcon isLogin={isLogin} cartBadge={cartBadge} />
+        <CartIcon />
         {isLogin ? (
-          <MyAccountIcon
-            setUserData={setUserData}
-            setIsLogin={setIsLogin}
-            setIsAllowToSignin={setIsAllowToSignin}
-            setActiveLink={setActiveLink}
-          />
+          <MyAccountIcon />
         ) : (
           <a
             onClick={handleLoginNavigator}

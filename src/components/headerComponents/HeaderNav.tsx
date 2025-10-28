@@ -1,9 +1,11 @@
+import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router";
-import type { Props } from "./Header";
+import { DataContext } from "../../context/DataContext";
 
-export const HeaderNav = ({ setActiveLink, activeLink }: Props) => {
+export const HeaderNav = () => {
   const navigator = useNavigate();
   const routeLocations = useLocation();
+  const { activeLink, setActiveLink } = useContext(DataContext);
 
   const validRoutes = [
     "/",

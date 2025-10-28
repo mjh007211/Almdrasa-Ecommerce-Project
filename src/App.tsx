@@ -17,7 +17,8 @@ import ApplePlay from "/38932d5accb54c528f9bcf326ca48ea29bd6d890.png";
 import { ScrollToTop } from "./components/genericComponents/ScrollToTop";
 import { useEffect, useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { allProductsData, type ProductsData } from "./productsData";
+import { type ProductsData } from "./productsData";
+import { DataContext } from "./context/DataContext";
 
 const theme = createTheme({
   components: {
@@ -47,9 +48,15 @@ function App() {
   );
   const [isLogin, setIsLogin] = useState(false);
   const [isAllowToSignin, setIsAllowToSignin] = useState(true);
-  const [displayProduct, setDisplayProduct] = useState<ProductsData>({});
-  const [displayRelatedProduct, setDisplayRelatedProduct] =
-    useState<ProductsData[]>(allProductsData);
+  const [displayProduct, setDisplayProduct] = useState<ProductsData>({
+    productName: "",
+    productImage: "",
+    originalProductPrice: 0,
+    discountedProductPrice: 0,
+  });
+  const [displayRelatedProduct, setDisplayRelatedProduct] = useState<
+    ProductsData[]
+  >([]);
   const [cartBadge, setCartBadge] = useState<number | undefined>(0);
   const [heartBadge, setHeartBadge] = useState<number | undefined>(0);
 
@@ -63,9 +70,9 @@ function App() {
     const userCartLen = findUser?.cart.length;
     const userFavoriteProductsLen = findUser?.favoriteProducts.length;
 
-    const anyUserLogin = getStoredUsers.some((u) => u.isLogin === true);
+    // const anyUserLogin = getStoredUsers.some((u) => u.isLogin === true);
 
-    if (anyUserLogin) {
+    if (findUser) {
       setIsLogin(true);
       setIsAllowToSignin(false);
       setCartBadge(userCartLen);
@@ -78,9 +85,7 @@ function App() {
 
   useEffect(() => {
     getUserDataFromLocalStorge();
-  }, []);
-
-  console.log({ displayRelatedProduct });
+  }, [isLogin]);
 
   return (
     <>
@@ -113,102 +118,50 @@ function App() {
         </div>
       </div>
       <div className="max-w-[1170px] mx-auto font-Poppins">
-        <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <ScrollToTop />
-            <Header
-              activeLink={activeLink}
-              isLogin={isLogin}
-              cartBadge={cartBadge}
-              heartBadge={heartBadge}
-              setUserData={setUserData}
-              setActiveLink={setActiveLink}
-              setIsLogin={setIsLogin}
-              setIsAllowToSignin={setIsAllowToSignin}
-            />
-            <div className="h-[1px] w-[1440px] bg-[#0000003b]  absolute left-[50%] translate-x-[-50%] top-[142px]"></div>
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <Home
-                    setDisplayProduct={setDisplayProduct}
-                    setDisplayRelatedProduct={setDisplayRelatedProduct}
-                    setCartBadge={setCartBadge}
-                    setHeartBadge={setHeartBadge}
-                  />
-                }
-              />
-              <Route
-                path="/sign-up"
-                element={
-                  <SignUp
-                    userData={userData}
-                    isAllowToSignin={isAllowToSignin}
-                    isLogin={isLogin}
-                    setIsAllowToSignin={setIsAllowToSignin}
-                    setActiveLink={setActiveLink}
-                    setUserData={setUserData}
-                    setIsLogin={setIsLogin}
-                  />
-                }
-              />
-              <Route
-                path="/login"
-                element={
-                  <Login
-                    setUserData={setUserData}
-                    setIsLogin={setIsLogin}
-                    setActiveLink={setActiveLink}
-                    setIsAllowToSignin={setIsAllowToSignin}
-                  />
-                }
-              />
-              <Route
-                path="/favorite-list"
-                element={
-                  <FavoriteProductsList
-                    setDisplayProduct={setDisplayProduct}
-                    setActiveLink={setActiveLink}
-                    setDisplayRelatedProduct={setDisplayRelatedProduct}
-                    setHeartBadge={setHeartBadge}
-                    setCartBadge={setCartBadge}
-                  />
-                }
-              />
-              <Route
-                path="/card"
-                element={
-                  <CartList
-                    setActiveLink={setActiveLink}
-                    setCartBadge={setCartBadge}
-                  />
-                }
-              />
-              <Route path="/check-out" element={<CheckOut />} />
-              <Route
-                path="/my-account"
-                element={<MyAccount userData={userData} />}
-              />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route
-                path="/product"
-                element={
-                  <Product
-                    displayProduct={displayProduct}
-                    displayRelatedProduct={displayRelatedProduct}
-                    setDisplayProduct={setDisplayProduct}
-                    setDisplayRelatedProduct={setDisplayRelatedProduct}
-                    setCartBadge={setCartBadge}
-                    setHeartBadge={setHeartBadge}
-                  />
-                }
-              />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </ThemeProvider>
+        <DataContext.Provider
+          value={{
+            activeLink,
+            setActiveLink,
+            userData,
+            setUserData,
+            isLogin,
+            setIsLogin,
+            isAllowToSignin,
+            setIsAllowToSignin,
+            displayProduct,
+            setDisplayProduct,
+            displayRelatedProduct,
+            setDisplayRelatedProduct,
+            cartBadge,
+            setCartBadge,
+            heartBadge,
+            setHeartBadge,
+          }}
+        >
+          <ThemeProvider theme={theme}>
+            <BrowserRouter>
+              <ScrollToTop />
+              <Header />
+              <div className="h-[1px] w-[1440px] bg-[#0000003b]  absolute left-[50%] translate-x-[-50%] top-[142px]"></div>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/sign-up" element={<SignUp />} />
+                <Route path="/login" element={<Login />} />
+                <Route
+                  path="/favorite-list"
+                  element={<FavoriteProductsList />}
+                />
+                <Route path="/card" element={<CartList />} />
+                <Route path="/check-out" element={<CheckOut />} />
+                <Route path="/my-account" element={<MyAccount />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/product" element={<Product />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </ThemeProvider>
+        </DataContext.Provider>
         <footer className="w-[1440px] h-[440px] absolute left-[50%] translate-x-[-50%] mt-8 pt-16 text-[#FAFAFA] bg-black">
           <div className="container max-w-[1170px] mx-auto">
             <div className="flex gap-20">

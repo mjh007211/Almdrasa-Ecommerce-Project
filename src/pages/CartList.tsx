@@ -1,20 +1,17 @@
 import { useNavigate } from "react-router";
 import { ButtonComponent } from "../components/genericComponents/ButtonComponent";
 import { SecondaryButtonComponent } from "../components/genericComponents/SecondaryButtonComponent";
-import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
+import { useContext, useEffect, useState } from "react";
 import type { UserData } from "../App";
 import type { ProductsData } from "../productsData";
 import { CartProductRow } from "../components/cartComponents/CartProductRow";
+import { DataContext } from "../context/DataContext";
 
-type Props = {
-  setActiveLink: Dispatch<SetStateAction<string>>;
-  setCartBadge: Dispatch<SetStateAction<number | undefined>>;
-};
-
-export const CartList = ({ setActiveLink, setCartBadge }: Props) => {
+export const CartList = () => {
   const navigator = useNavigate();
   const [userCartList, setUserCartList] = useState<ProductsData[]>([]);
   const [isError, setIsError] = useState(false);
+  const { setActiveLink } = useContext(DataContext);
 
   useEffect(() => {
     const getStoredUsers: UserData[] = JSON.parse(
@@ -74,8 +71,6 @@ export const CartList = ({ setActiveLink, setCartBadge }: Props) => {
                     productName={p.productName}
                     originalProductPrice={p.originalProductPrice}
                     discountedProductPrice={p.discountedProductPrice}
-                    setUserCartList={setUserCartList}
-                    setCartBadge={setCartBadge}
                   />
                 </tr>
               ))}

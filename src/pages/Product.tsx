@@ -1,26 +1,13 @@
 import { ProductCard } from "../components/genericComponents/ProductCard";
 import { ButtonComponent } from "../components/genericComponents/ButtonComponent";
 import { SecondarySectionTitle } from "../components/genericComponents/SecondarySectionTitle";
-import { allProductsData, type ProductsData } from "../productsData";
-import { useEffect, type Dispatch, type SetStateAction } from "react";
+import { allProductsData } from "../productsData";
+import { useContext, useEffect } from "react";
+import { DataContext } from "../context/DataContext";
 
-type Props = {
-  displayProduct: ProductsData;
-  displayRelatedProduct: ProductsData[];
-  setDisplayProduct: Dispatch<SetStateAction<ProductsData>>;
-  setDisplayRelatedProduct: Dispatch<SetStateAction<ProductsData[]>>;
-  setHeartBadge: Dispatch<SetStateAction<number | undefined>>;
-  setCartBadge: Dispatch<SetStateAction<number | undefined>>;
-};
-
-export const Product = ({
-  displayProduct,
-  displayRelatedProduct,
-  setDisplayProduct,
-  setDisplayRelatedProduct,
-  setCartBadge,
-  setHeartBadge,
-}: Props) => {
+export const Product = () => {
+  const { displayProduct, displayRelatedProduct, setDisplayRelatedProduct } =
+    useContext(DataContext);
   const handleDisplayRelatedProduct = () => {
     const getRelatedProduct = allProductsData.filter(
       (p) =>
@@ -427,8 +414,10 @@ export const Product = ({
         </div>
       </div>
       <div className="mt-37">
-        {!displayRelatedProduct && (
+        {displayRelatedProduct.length ? (
           <SecondarySectionTitle secondaryTitle="Related Item" />
+        ) : (
+          ""
         )}
         <div>
           <ul className="grid grid-cols-[repeat(4,minmax(270px,1fr))] gap-8 mt-12">
@@ -443,10 +432,6 @@ export const Product = ({
                   originalProductPrice={p.originalProductPrice}
                   discountedProductPrice={p.discountedProductPrice}
                   rating={p.rating}
-                  setDisplayProduct={setDisplayProduct}
-                  setDisplayRelatedProduct={setDisplayRelatedProduct}
-                  setCartBadge={setCartBadge}
-                  setHeartBadge={setHeartBadge}
                 />
               </li>
             ))}

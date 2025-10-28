@@ -3,33 +3,10 @@ import { ButtonComponent } from "../components/genericComponents/ButtonComponent
 import { useNavigate } from "react-router";
 import signinImage from "/75f394c0a1c7dc5b68a42239311e510f54d8cd59.jpg";
 import type { UserData } from "../App";
-import {
-  useRef,
-  useState,
-  type Dispatch,
-  type FormEvent,
-  type SetStateAction,
-} from "react";
+import { useContext, useRef, useState, type FormEvent } from "react";
+import { DataContext } from "../context/DataContext";
 
-type Props = {
-  userData: UserData[];
-  isAllowToSignin: boolean;
-  isLogin: boolean;
-  setUserData: Dispatch<SetStateAction<UserData[]>>;
-  setIsLogin: Dispatch<SetStateAction<boolean>>;
-  setActiveLink: Dispatch<SetStateAction<string>>;
-  setIsAllowToSignin: Dispatch<SetStateAction<boolean>>;
-};
-
-export const SignUp = ({
-  userData,
-  isAllowToSignin,
-  isLogin,
-  setUserData,
-  setIsLogin,
-  setActiveLink,
-  setIsAllowToSignin,
-}: Props) => {
+export const SignUp = () => {
   const navigator = useNavigate();
   const userNameRef = useRef<HTMLInputElement>(null);
   const emailOrPhoneRef = useRef<HTMLInputElement>(null);
@@ -38,8 +15,15 @@ export const SignUp = ({
     "username" | "emailOrPhone" | null
   >(null);
   const [isUserlogin, setIsUserlogin] = useState(false);
-
-  console.log({ isAllowToSignin });
+  const {
+    setActiveLink,
+    isLogin,
+    isAllowToSignin,
+    setUserData,
+    setIsAllowToSignin,
+    setIsLogin,
+    userData,
+  } = useContext(DataContext);
 
   const userNameExistMessage = "Username already been taken. Try again.";
 

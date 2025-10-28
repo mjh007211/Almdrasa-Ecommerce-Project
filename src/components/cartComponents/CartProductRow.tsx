@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import type { ProductsData } from "../../productsData";
 import type { UserData } from "../../App";
+import { DataContext } from "../../context/DataContext";
 
 export const CartProductRow = ({
   id,
@@ -8,16 +9,15 @@ export const CartProductRow = ({
   productName,
   originalProductPrice,
   discountedProductPrice,
-  setUserCartList,
-  setCartBadge,
 }: ProductsData) => {
   const [productSubTotal, setProductSubTotal] = useState(
     discountedProductPrice ?? originalProductPrice
   );
   const inputRef = useRef<HTMLInputElement>(null);
+  const { setCartBadge, setUserCartList } = useContext(DataContext);
 
   const handleProductSubTotal = () => {
-    const inputValue: string = inputRef.current?.value;
+    const inputValue = inputRef.current?.value;
 
     if (inputValue === "1") {
       setProductSubTotal(discountedProductPrice ?? originalProductPrice);
@@ -43,11 +43,9 @@ export const CartProductRow = ({
       return;
     }
 
-    const updateUserProductCart: ProductsData[] = findUser?.cart.filter(
-      (u) => u.id !== id
-    );
+    const updateUserProductCart = findUser?.cart.filter((u) => u.id !== id);
 
-    const updateUsers: ProductsData[] = getStoredUsers.map((u) =>
+    const updateUsers = getStoredUsers.map((u) =>
       u.isLogin === true
         ? {
             ...u,

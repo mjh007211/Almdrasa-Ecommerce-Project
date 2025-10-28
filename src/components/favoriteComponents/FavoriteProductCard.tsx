@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import type { UserData } from "../../App";
 import type { ProductsData } from "../../productsData";
+import { DataContext } from "../../context/DataContext";
 
 export const FavoriteProductCard = ({
   id,
@@ -10,14 +11,13 @@ export const FavoriteProductCard = ({
   originalProductPrice,
   discountedProductPrice,
   rating,
-  setUserFavoriteList,
-  setHeartBadge,
-  setCartBadge,
 }: ProductsData) => {
   const [isError, setIsError] = useState<
     "sameProduct" | "userNotFound" | "success" | null
   >(null);
   const [isVisible, setIsVisible] = useState(false);
+  const { setHeartBadge, setUserFavoriteList, setCartBadge } =
+    useContext(DataContext);
 
   useEffect(() => {
     if (isError) {
@@ -76,7 +76,9 @@ export const FavoriteProductCard = ({
       return;
     }
 
-    const isProductAdded = findUser.cart.some((p) => p.id === id);
+    const isProductAdded = findUser.cart.some(
+      (p) => p.productName === productName
+    );
 
     if (isProductAdded) {
       setIsError("sameProduct");

@@ -6,14 +6,8 @@ import { SectionsTitles } from "../genericComponents/SectionsTitles";
 import { ButtonComponent } from "../genericComponents/ButtonComponent";
 import { useRef } from "react";
 import { flashSalesProductsData } from "../../productsData";
-import type { Props } from "../../pages/Home";
 
-export const FlashSalesSection = ({
-  setDisplayProduct,
-  setDisplayRelatedProduct,
-  setCartBadge,
-  setHeartBadge,
-}: Props) => {
+export const FlashSalesSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: "left" | "right") => {
@@ -60,10 +54,6 @@ export const FlashSalesSection = ({
                   originalProductPrice={originalProductPrice}
                   discountedProductPrice={discountedProductPrice}
                   rating={rating}
-                  setDisplayProduct={setDisplayProduct}
-                  setDisplayRelatedProduct={setDisplayRelatedProduct}
-                  setCartBadge={setCartBadge}
-                  setHeartBadge={setHeartBadge}
                 />
               </li>
             )
