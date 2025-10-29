@@ -1,11 +1,16 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ButtonComponent } from "../components/genericComponents/ButtonComponent";
 import { DataContext } from "../context/DataContext";
 
 export const MyAccount = () => {
+  const [loginUserName, setLoginUserName] = useState<string | undefined>();
   const { userData } = useContext(DataContext);
-  const loginUser = userData.find((u) => u.isLogin === true);
-  const loginUserName = loginUser?.userName;
+
+  useEffect(() => {
+    const loginUser = userData.find((u) => u.isLogin === true);
+    setLoginUserName(loginUser?.userName);
+  }, [userData]);
+
   return (
     <section className="mt-16">
       <div className="flex items-center justify-between text-[14px]">

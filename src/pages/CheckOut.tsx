@@ -4,23 +4,22 @@ import bkashImage from "/bacbff99a8fc8e50822cb2d2d168e5d0e8bf7ea6.png";
 import visaImage from "/cfb0a6ee01b240273b40dab07f8246ef98aed88a.png";
 import masterImage from "/6eefb61d27c754abac218d25d8ea4360de61f8e8.png";
 import nagadImage from "/b28e31b9c88d0c9b038b82deeb0523d82cffe267.png";
-import { useEffect, useState, type FormEvent } from "react";
+import { useContext, useEffect, useState, type FormEvent } from "react";
 import type { ProductsData } from "../productsData";
-import type { UserData } from "../App";
 import { CheckOutProductsList } from "../components/checkoutComponents/CheckOutProductsList";
+import { DataContext } from "../context/DataContext";
 
 export const CheckOut = () => {
-  const [userProducts, setUserProducts] = useState<ProductsData[]>([]);
+  const [userProducts, setUserProducts] = useState<ProductsData[] | undefined>(
+    []
+  );
+  const { userData } = useContext(DataContext);
 
   useEffect(() => {
-    const getStoredUsers: UserData[] = JSON.parse(
-      localStorage.getItem("users") || "[]"
-    );
-
-    const findUser = getStoredUsers.find((u) => u.isLogin === true);
+    const findUser = userData.find((u) => u.isLogin === true);
 
     setUserProducts(findUser?.cart);
-  }, []);
+  }, [userData]);
 
   const handleUserBillingDetails = (e: FormEvent) => {
     e.preventDefault();

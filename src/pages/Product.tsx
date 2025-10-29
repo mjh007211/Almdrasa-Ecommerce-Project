@@ -14,7 +14,6 @@ export const Product = () => {
         p.category === displayProduct.category &&
         p.productName !== displayProduct.productName
     );
-
     setDisplayRelatedProduct(getRelatedProduct);
   };
 

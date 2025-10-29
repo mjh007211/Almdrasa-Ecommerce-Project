@@ -16,8 +16,13 @@ export const FavoriteProductCard = ({
     "sameProduct" | "userNotFound" | "success" | null
   >(null);
   const [isVisible, setIsVisible] = useState(false);
-  const { setHeartBadge, setUserFavoriteList, setCartBadge } =
-    useContext(DataContext);
+  const {
+    userData,
+    setUserData,
+    setHeartBadge,
+    setUserFavoriteList,
+    setCartBadge,
+  } = useContext(DataContext);
 
   useEffect(() => {
     if (isError) {
@@ -32,11 +37,7 @@ export const FavoriteProductCard = ({
     }
   }, [isError]);
   const handleRemoveFavoriteProduct = () => {
-    const getStoredUsers: UserData[] = JSON.parse(
-      localStorage.getItem("users") || "[]"
-    );
-
-    const findUser = getStoredUsers.find((u) => u.isLogin === true);
+    const findUser = userData.find((u) => u.isLogin === true);
 
     const isRemoved = confirm(
       "Are you sure you want to delete this product from favorite product list?"
@@ -49,7 +50,7 @@ export const FavoriteProductCard = ({
     const updateUserFavoriteProductList: ProductsData[] =
       findUser?.favoriteProducts.filter((u) => u.id !== id);
 
-    const updateUsers: ProductsData[] = getStoredUsers.map((u) =>
+    const updateUsers = userData.map((u) =>
       u.isLogin === true
         ? {
             ...u,
@@ -61,15 +62,12 @@ export const FavoriteProductCard = ({
     setHeartBadge((prev: number) => prev - 1);
 
     localStorage.setItem("users", JSON.stringify(updateUsers));
+    setUserData(updateUsers);
     setUserFavoriteList(updateUserFavoriteProductList);
   };
 
   const handleAddProductCart = () => {
-    const getStoredUsers: UserData[] = JSON.parse(
-      localStorage.getItem("users") || "[]"
-    );
-
-    const findUser = getStoredUsers.find((u) => u.isLogin === true);
+    const findUser = userData.find((u) => u.isLogin === true);
 
     if (!findUser) {
       setIsError("userNotFound");
@@ -95,13 +93,14 @@ export const FavoriteProductCard = ({
 
     const updateUserCart: ProductsData[] = [...findUser.cart, product];
 
-    const updateUsers: UserData[] = getStoredUsers.map((u) =>
+    const updateUsers: UserData[] = userData.map((u) =>
       u.isLogin === true ? { ...u, cart: updateUserCart } : u
     );
 
     setCartBadge((prev: number) => prev + 1);
 
     localStorage.setItem("users", JSON.stringify(updateUsers));
+    setUserData(updateUsers);
     setIsError("success");
   };
 

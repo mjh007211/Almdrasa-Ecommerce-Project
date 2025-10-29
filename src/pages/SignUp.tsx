@@ -3,7 +3,7 @@ import { ButtonComponent } from "../components/genericComponents/ButtonComponent
 import { useNavigate } from "react-router";
 import signinImage from "/75f394c0a1c7dc5b68a42239311e510f54d8cd59.jpg";
 import type { UserData } from "../App";
-import { useContext, useRef, useState, type FormEvent } from "react";
+import { useContext, useEffect, useRef, useState, type FormEvent } from "react";
 import { DataContext } from "../context/DataContext";
 
 export const SignUp = () => {
@@ -14,7 +14,9 @@ export const SignUp = () => {
   const [userExistData, setUserExistData] = useState<
     "username" | "emailOrPhone" | null
   >(null);
-  const [isUserlogin, setIsUserlogin] = useState(false);
+  const [isUserlogin, setIsUserlogin] = useState<boolean | null>(false);
+  const [isVisible, setIsVisible] = useState(false);
+
   const {
     setActiveLink,
     isLogin,
@@ -24,6 +26,19 @@ export const SignUp = () => {
     setIsLogin,
     userData,
   } = useContext(DataContext);
+
+  useEffect(() => {
+    if (isUserlogin) {
+      setIsVisible(true);
+
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+        setIsUserlogin(null);
+      }, 2500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isUserlogin]);
 
   const userNameExistMessage = "Username already been taken. Try again.";
 
@@ -35,9 +50,9 @@ export const SignUp = () => {
   const handleOnSubmit = (e: FormEvent) => {
     e.preventDefault();
     const user: UserData = {
-      userName: userNameRef.current?.value ?? "",
-      emailOrPhone: emailOrPhoneRef.current?.value ?? "",
-      password: passwordRef.current?.value ?? "",
+      userName: userNameRef.current?.value,
+      emailOrPhone: emailOrPhoneRef.current?.value,
+      password: passwordRef.current?.value,
       isLogin: true,
       favoriteProducts: [],
       cart: [],
@@ -47,14 +62,9 @@ export const SignUp = () => {
       return;
     }
 
-    const getStoredUsers: UserData[] = JSON.parse(
-      localStorage.getItem("users") || "[]"
-    );
-    const isUserNameTaken = getStoredUsers.some(
-      (u) => u.userName === user.userName
-    );
+    const isUserNameTaken = userData.some((u) => u.userName === user.userName);
 
-    const isUserEmailOrPhoneTaken = getStoredUsers.some(
+    const isUserEmailOrPhoneTaken = userData.some(
       (u) => u.emailOrPhone === user.emailOrPhone
     );
 
@@ -72,7 +82,7 @@ export const SignUp = () => {
       return;
     }
 
-    const updateUserData: UserData[] = [...getStoredUsers, user];
+    const updateUserData: UserData[] = [...userData, user];
 
     localStorage.setItem("users", JSON.stringify(updateUserData));
     setUserData(updateUserData);
@@ -199,7 +209,11 @@ export const SignUp = () => {
               Log in
             </a>
           </span>
-          <p className="absolute left-0 -bottom-8 text-[14px] text-red-700">
+          <p
+            className={`absolute left-0 -bottom-8 text-[14px] text-red-700 transition-opacity duration-500 ${
+              isVisible ? "opacity-100" : "opacity-0"
+            }`}
+          >
             {isUserlogin && UserAlreadyLoginMessage}
           </p>
         </div>

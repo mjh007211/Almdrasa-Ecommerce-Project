@@ -14,8 +14,13 @@ export const Login = () => {
   );
   const emailOrPhoneRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const { setActiveLink, setUserData, setIsAllowToSignin, setIsLogin } =
-    useContext(DataContext);
+  const {
+    userData,
+    setActiveLink,
+    setUserData,
+    setIsAllowToSignin,
+    setIsLogin,
+  } = useContext(DataContext);
 
   const userInvaildMessage = "Email/Passaword incorrect. Try again.";
   const UserNotFoundMessage =
@@ -23,14 +28,10 @@ export const Login = () => {
 
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
-    const getStoredUsers: UserData[] = JSON.parse(
-      localStorage.getItem("users") || "[]"
-    );
-
     const emailOrPhone = emailOrPhoneRef.current?.value;
     const password = passwordRef.current?.value;
 
-    const findUser = getStoredUsers.find(
+    const findUser = userData.find(
       (u) => u.emailOrPhone === emailOrPhone || u.password === password
     );
 
@@ -47,7 +48,7 @@ export const Login = () => {
       return;
     }
 
-    const updateUsers: UserData[] = getStoredUsers.map((u) =>
+    const updateUsers: UserData[] = userData.map((u) =>
       u.emailOrPhone === findUser.emailOrPhone
         ? { ...u, isLogin: true }
         : { ...u, isLogin: false }

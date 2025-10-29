@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import type { UserData } from "../App";
 import { FavoriteProductCard } from "../components/favoriteComponents/FavoriteProductCard";
 import { SecondaryButtonComponent } from "../components/genericComponents/SecondaryButtonComponent";
 import { SecondarySectionTitle } from "../components/genericComponents/SecondarySectionTitle";
@@ -10,18 +9,14 @@ import { ProductCard } from "../components/genericComponents/ProductCard";
 import { DataContext } from "../context/DataContext";
 
 export const FavoriteProductsList = () => {
-  const [userFavoriteList, setUserFavoriteList] = useState<ProductsData[]>([]);
   const [isError, setIsError] = useState(false);
   const [justForYouData, setJustForYouData] = useState<ProductsData[]>([]);
   const navigator = useNavigate();
-  const { setActiveLink } = useContext(DataContext);
+  const { userData, userFavoriteList, setActiveLink, setUserFavoriteList } =
+    useContext(DataContext);
 
   useEffect(() => {
-    const getStoredUsers: UserData[] = JSON.parse(
-      localStorage.getItem("users") || "[]"
-    );
-
-    const findUser = getStoredUsers.find((u) => u.isLogin === true);
+    const findUser = userData.find((u) => u.isLogin === true);
 
     if (!findUser) {
       setIsError(true);
@@ -29,7 +24,7 @@ export const FavoriteProductsList = () => {
     }
 
     setUserFavoriteList(findUser.favoriteProducts);
-  }, []);
+  }, [userData, setUserFavoriteList]);
 
   const handleNavigate = () => {
     navigator("/sign-up");

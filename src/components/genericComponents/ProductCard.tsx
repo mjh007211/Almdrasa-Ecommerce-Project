@@ -21,6 +21,8 @@ export const ProductCard = ({
   >(null);
   const [isVisible, setIsVisible] = useState(false);
   const {
+    userData,
+    setUserData,
     setCartBadge,
     setHeartBadge,
     setDisplayProduct,
@@ -44,11 +46,7 @@ export const ProductCard = ({
   const location = useLocation();
 
   const handleAddFavoriteProduct = () => {
-    const getStoredUsers: UserData[] = JSON.parse(
-      localStorage.getItem("users") || "[]"
-    );
-
-    const findUser = getStoredUsers.find((u) => u.isLogin === true);
+    const findUser = userData.find((u) => u.isLogin === true);
 
     if (!findUser) {
       setIsError("userNotFound");
@@ -79,7 +77,7 @@ export const ProductCard = ({
       product,
     ];
 
-    const updateUsers: UserData[] = getStoredUsers.map((u) =>
+    const updateUsers: UserData[] = userData.map((u) =>
       u.isLogin === true
         ? { ...u, favoriteProducts: updateUserFavoriteList }
         : u
@@ -88,15 +86,12 @@ export const ProductCard = ({
     setHeartBadge((prev: number) => prev + 1);
 
     localStorage.setItem("users", JSON.stringify(updateUsers));
+    setUserData(updateUsers);
     setIsError("success");
   };
 
   const handleAddProductCart = () => {
-    const getStoredUsers: UserData[] = JSON.parse(
-      localStorage.getItem("users") || "[]"
-    );
-
-    const findUser = getStoredUsers.find((u) => u.isLogin === true);
+    const findUser = userData.find((u) => u.isLogin === true);
 
     if (!findUser) {
       setIsError("userNotFound");
@@ -122,13 +117,14 @@ export const ProductCard = ({
 
     const updateUserCart: ProductsData[] = [...findUser.cart, product];
 
-    const updateUsers: UserData[] = getStoredUsers.map((u) =>
+    const updateUsers: UserData[] = userData.map((u) =>
       u.isLogin === true ? { ...u, cart: updateUserCart } : u
     );
 
     setCartBadge((prev: number) => prev + 1);
 
     localStorage.setItem("users", JSON.stringify(updateUsers));
+    setUserData(updateUsers);
     setIsError("success");
   };
 

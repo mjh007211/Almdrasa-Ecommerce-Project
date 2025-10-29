@@ -2,23 +2,17 @@ import { useNavigate } from "react-router";
 import { ButtonComponent } from "../components/genericComponents/ButtonComponent";
 import { SecondaryButtonComponent } from "../components/genericComponents/SecondaryButtonComponent";
 import { useContext, useEffect, useState } from "react";
-import type { UserData } from "../App";
-import type { ProductsData } from "../productsData";
 import { CartProductRow } from "../components/cartComponents/CartProductRow";
 import { DataContext } from "../context/DataContext";
 
 export const CartList = () => {
   const navigator = useNavigate();
-  const [userCartList, setUserCartList] = useState<ProductsData[]>([]);
   const [isError, setIsError] = useState(false);
-  const { setActiveLink } = useContext(DataContext);
+  const { userData, userCartList, setActiveLink, setUserCartList } =
+    useContext(DataContext);
 
   useEffect(() => {
-    const getStoredUsers: UserData[] = JSON.parse(
-      localStorage.getItem("users") || "[]"
-    );
-
-    const findUser = getStoredUsers.find((u) => u.isLogin === true);
+    const findUser = userData.find((u) => u.isLogin === true);
 
     if (!findUser) {
       setIsError(true);
@@ -26,7 +20,7 @@ export const CartList = () => {
     }
 
     setUserCartList(findUser.cart);
-  }, []);
+  }, [userData, setUserCartList]);
 
   const handleNavigate = () => {
     navigator("/sign-up");

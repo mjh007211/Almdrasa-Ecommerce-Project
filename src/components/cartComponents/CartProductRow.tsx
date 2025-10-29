@@ -1,7 +1,7 @@
 import { useContext, useRef, useState } from "react";
 import type { ProductsData } from "../../productsData";
-import type { UserData } from "../../App";
 import { DataContext } from "../../context/DataContext";
+import type { UserData } from "../../App";
 
 export const CartProductRow = ({
   id,
@@ -14,7 +14,8 @@ export const CartProductRow = ({
     discountedProductPrice ?? originalProductPrice
   );
   const inputRef = useRef<HTMLInputElement>(null);
-  const { setCartBadge, setUserCartList } = useContext(DataContext);
+  const { userData, setUserData, setCartBadge, setUserCartList } =
+    useContext(DataContext);
 
   const handleProductSubTotal = () => {
     const inputValue = inputRef.current?.value;
@@ -29,11 +30,7 @@ export const CartProductRow = ({
   };
 
   const handleRemoveProductCart = () => {
-    const getStoredUsers: UserData[] = JSON.parse(
-      localStorage.getItem("users") || "[]"
-    );
-
-    const findUser = getStoredUsers.find((u) => u.isLogin === true);
+    const findUser = userData.find((u) => u.isLogin === true);
 
     const isRemoved = confirm(
       "Are you sure you want to delete this product from cart list?"
@@ -45,7 +42,7 @@ export const CartProductRow = ({
 
     const updateUserProductCart = findUser?.cart.filter((u) => u.id !== id);
 
-    const updateUsers = getStoredUsers.map((u) =>
+    const updateUsers: UserData[] = userData.map((u) =>
       u.isLogin === true
         ? {
             ...u,
@@ -57,6 +54,7 @@ export const CartProductRow = ({
     setCartBadge((prev: number) => prev - 1);
 
     localStorage.setItem("users", JSON.stringify(updateUsers));
+    setUserData(updateUsers);
     setUserCartList(updateUserProductCart);
   };
 

@@ -9,19 +9,21 @@ import {
   Star,
   Logout,
 } from "@mui/icons-material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import type { UserData } from "../../App";
-import type { Props } from "./Header";
+import { DataContext } from "../../context/DataContext";
 
-export const MyAccountIcon = ({
-  setUserData,
-  setIsLogin,
-  setIsAllowToSignin,
-  setActiveLink,
-}: Props) => {
+export const MyAccountIcon = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [isActive, setIsActive] = useState(false);
+  const {
+    userData,
+    setActiveLink,
+    setUserData,
+    setIsAllowToSignin,
+    setIsLogin,
+  } = useContext(DataContext);
 
   const open = Boolean(anchorEl);
   const navigator = useNavigate();
@@ -45,15 +47,11 @@ export const MyAccountIcon = ({
   };
 
   const handleLogout = () => {
-    const getStoredUsers: UserData[] = JSON.parse(
-      localStorage.getItem("users") || "[]"
-    );
-
     const hasLogout = confirm("Are you sure you want to log out?");
 
     if (!hasLogout) return;
 
-    const updateUsers: UserData[] = getStoredUsers.map((u) =>
+    const updateUsers: UserData[] = userData.map((u) =>
       u.isLogin === true ? { ...u, isLogin: false } : u
     );
 
