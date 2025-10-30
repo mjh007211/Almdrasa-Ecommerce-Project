@@ -27,6 +27,7 @@ export const ProductCard = ({
     setHeartBadge,
     setDisplayProduct,
     setDisplayRelatedProduct,
+    setUserSubTotal,
   } = useContext(DataContext);
 
   useEffect(() => {

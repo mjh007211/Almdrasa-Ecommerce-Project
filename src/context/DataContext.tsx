@@ -13,6 +13,7 @@ type AuthenticationContextType = {
   heartBadge: number | undefined;
   userFavoriteList: ProductsData[];
   userCartList: ProductsData[];
+  userSubTotal: number | undefined;
   setActiveLink: (link: string) => void;
   setUserData: (data: UserData[]) => void;
   setIsLogin: (input: boolean) => void;
@@ -23,6 +24,7 @@ type AuthenticationContextType = {
   setHeartBadge: (counter: number) => void;
   setUserFavoriteList: (products: ProductsData[]) => void;
   setUserCartList: (products: ProductsData[]) => void;
+  setUserSubTotal: (total: number) => void;
 };
 
 export const DataContext = createContext<AuthenticationContextType>({
@@ -41,6 +43,7 @@ export const DataContext = createContext<AuthenticationContextType>({
   cartBadge: 0,
   heartBadge: 0,
   userFavoriteList: [],
+  userSubTotal: 0,
   userCartList: [],
   setActiveLink: () => {},
   setUserData: () => {},
@@ -52,4 +55,5 @@ export const DataContext = createContext<AuthenticationContextType>({
   setHeartBadge: () => 0,
   setUserFavoriteList: () => {},
   setUserCartList: () => {},
+  setUserSubTotal: () => {},
 });

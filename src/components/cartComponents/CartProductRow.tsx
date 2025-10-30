@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef, useState, type ChangeEvent } from "react";
 import type { ProductsData } from "../../productsData";
 import { DataContext } from "../../context/DataContext";
 import type { UserData } from "../../App";
@@ -9,24 +9,38 @@ export const CartProductRow = ({
   productName,
   originalProductPrice,
   discountedProductPrice,
+  quantity = 1,
 }: ProductsData) => {
   const [productSubTotal, setProductSubTotal] = useState(
     discountedProductPrice ?? originalProductPrice
   );
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [inputValue, setInputValue] = useState(quantity.toString());
   const { userData, setUserData, setCartBadge, setUserCartList } =
     useContext(DataContext);
 
-  const handleProductSubTotal = () => {
-    const inputValue = inputRef.current?.value;
+  const handleProductSubTotal = (e: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    setInputValue(inputValue);
+    const quantity = parseInt(inputValue || "1");
+    const productFinalPrice = discountedProductPrice ?? originalProductPrice;
+    const subTotal = quantity * productFinalPrice;
 
-    if (inputValue === "1") {
-      setProductSubTotal(discountedProductPrice ?? originalProductPrice);
-    }
-
-    const subTotal =
-      parseInt(inputValue) * (discountedProductPrice ?? originalProductPrice);
     setProductSubTotal(subTotal);
+
+    const findUser = userData.find((u) => u.isLogin === true);
+    if (!findUser) return;
+
+    const updatedCart = findUser.cart.map((p) =>
+      p.id === id ? { ...p, quantity } : p
+    );
+
+    const updatedUsers = userData.map((u) =>
+      u.isLogin === true ? { ...u, cart: updatedCart } : u
+    );
+
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
+    setUserData(updatedUsers);
+    setUserCartList(updatedCart);
   };
 
   const handleRemoveProductCart = () => {
@@ -99,10 +113,9 @@ export const CartProductRow = ({
           className="border rounded-[4px] border-[#0000003b] w-[72px]"
           type="number"
           name="quantity"
-          defaultValue={1}
+          value={inputValue}
           min={1}
-          ref={inputRef}
-          onClick={handleProductSubTotal}
+          onChange={(e) => handleProductSubTotal(e)}
         />
       </td>
       <td className="p-6">${productSubTotal}</td>

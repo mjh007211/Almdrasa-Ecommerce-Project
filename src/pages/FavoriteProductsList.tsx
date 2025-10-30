@@ -12,8 +12,15 @@ export const FavoriteProductsList = () => {
   const [isError, setIsError] = useState(false);
   const [justForYouData, setJustForYouData] = useState<ProductsData[]>([]);
   const navigator = useNavigate();
-  const { userData, userFavoriteList, setActiveLink, setUserFavoriteList } =
-    useContext(DataContext);
+  const {
+    userData,
+    setUserData,
+    userFavoriteList,
+    setActiveLink,
+    setUserFavoriteList,
+    setCartBadge,
+    setHeartBadge,
+  } = useContext(DataContext);
 
   useEffect(() => {
     const findUser = userData.find((u) => u.isLogin === true);
@@ -36,6 +43,31 @@ export const FavoriteProductsList = () => {
     setJustForYouData(shuffled.slice(0, 4));
   }, []);
 
+  const handleMoveFavoriteToCart = () => {
+    const isFavoriteMoved = confirm(
+      "Are you sure you want to move all your favorite products to cart?"
+    );
+
+    if (!isFavoriteMoved) {
+      return;
+    }
+
+    const findUser = userData.find((u) => u.isLogin === true);
+
+    const updateUserCart = [...findUser?.cart, ...userFavoriteList];
+
+    const updateUsers = userData.map((u) =>
+      u.isLogin === true
+        ? { ...u, cart: updateUserCart, favoriteProducts: [] }
+        : u
+    );
+
+    setUserData(updateUsers);
+    setCartBadge(updateUserCart.length);
+    setHeartBadge(0);
+    localStorage.setItem("users", JSON.stringify(updateUsers));
+  };
+
   return (
     <section className="mt-[60px] mb-28">
       <div className="flex gap-3 text-[14px]">
@@ -53,7 +85,9 @@ export const FavoriteProductsList = () => {
         <div>
           <div className="flex items-center justify-between">
             <h3>Wishlist ({userFavoriteList?.length})</h3>
-            <SecondaryButtonComponent text="Move All To Bag" width={223} />
+            <button onClick={handleMoveFavoriteToCart}>
+              <SecondaryButtonComponent text="Move All To Bag" width={223} />
+            </button>
           </div>
           <div>
             <ul className="grid grid-cols-[repeat(4,minmax(270px,1fr))] gap-8 mt-12">

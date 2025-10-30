@@ -60,6 +60,7 @@ function App() {
   const [heartBadge, setHeartBadge] = useState<number | undefined>(0);
   const [userFavoriteList, setUserFavoriteList] = useState<ProductsData[]>([]);
   const [userCartList, setUserCartList] = useState<ProductsData[]>([]);
+  const [userSubTotal, setUserSubTotal] = useState(0);
 
   const getUserDataFromLocalStorge = () => {
     const getStoredUsers: UserData[] = JSON.parse(
@@ -116,6 +117,8 @@ function App() {
             userFavoriteList,
             setUserCartList,
             userCartList,
+            userSubTotal,
+            setUserSubTotal,
           }}
         >
           <ThemeProvider theme={theme}>

@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { ButtonComponent } from "../components/genericComponents/ButtonComponent";
 import { SecondaryButtonComponent } from "../components/genericComponents/SecondaryButtonComponent";
 import { useContext, useEffect, useState } from "react";
@@ -8,8 +8,14 @@ import { DataContext } from "../context/DataContext";
 export const CartList = () => {
   const navigator = useNavigate();
   const [isError, setIsError] = useState(false);
-  const { userData, userCartList, setActiveLink, setUserCartList } =
-    useContext(DataContext);
+  const {
+    userData,
+    userCartList,
+    userSubTotal,
+    setActiveLink,
+    setUserCartList,
+    setUserSubTotal,
+  } = useContext(DataContext);
 
   useEffect(() => {
     const findUser = userData.find((u) => u.isLogin === true);
@@ -26,6 +32,21 @@ export const CartList = () => {
     navigator("/sign-up");
     setActiveLink("Sign Up");
   };
+
+  useEffect(() => {
+    if (userCartList && userCartList.length > 0) {
+      const total = userCartList.reduce((acc, product) => {
+        const price =
+          product.discountedProductPrice ?? product.originalProductPrice;
+        const quantity = product.quantity ?? 1;
+        return acc + price * quantity;
+      }, 0);
+
+      setUserSubTotal(total);
+    } else {
+      setUserSubTotal(0);
+    }
+  }, [userCartList, setUserSubTotal]);
 
   return (
     <section className="mt-[60px] mb-28">
@@ -65,14 +86,19 @@ export const CartList = () => {
                     productName={p.productName}
                     originalProductPrice={p.originalProductPrice}
                     discountedProductPrice={p.discountedProductPrice}
+                    quantity={p.quantity ?? 1}
                   />
                 </tr>
               ))}
             </tbody>
           </table>
           <div className="flex justify-between">
-            <SecondaryButtonComponent text="Return To Shop" width={218} />
-            <SecondaryButtonComponent text="Update Cart" width={195} />
+            <Link to="/">
+              <SecondaryButtonComponent text="Return To Shop" width={218} />
+            </Link>
+            <button>
+              <SecondaryButtonComponent text="Update Cart" width={195} />
+            </button>
           </div>
           <div className="flex justify-between mt-16">
             <div className="flex gap-4 h-[56px]">
@@ -89,7 +115,7 @@ export const CartList = () => {
               <div className="flex flex-col gap-5 mt-6">
                 <div className="flex items-center justify-between border-b pb-2.5">
                   <span>Subtotal:</span>
-                  <span>$0</span>
+                  <span>${userSubTotal}</span>
                 </div>
                 <div className="flex items-center justify-between border-b pb-2.5">
                   <span>Shipping:</span>
@@ -97,7 +123,7 @@ export const CartList = () => {
                 </div>
                 <div className="flex items-center justify-between mb-2.5">
                   <span>Total:</span>
-                  <span>$0</span>
+                  <span>${userSubTotal}</span>
                 </div>
               </div>
               <div className="flex justify-center">

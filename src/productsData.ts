@@ -7,6 +7,7 @@ export type ProductsData = {
   originalProductPrice: number;
   discountedProductPrice?: number;
   rating?: string;
+  quantity?: number;
 };
 
 export const flashSalesProductsData: ProductsData[] = [

@@ -4,23 +4,12 @@ import bkashImage from "/bacbff99a8fc8e50822cb2d2d168e5d0e8bf7ea6.png";
 import visaImage from "/cfb0a6ee01b240273b40dab07f8246ef98aed88a.png";
 import masterImage from "/6eefb61d27c754abac218d25d8ea4360de61f8e8.png";
 import nagadImage from "/b28e31b9c88d0c9b038b82deeb0523d82cffe267.png";
-import { useContext, useEffect, useState, type FormEvent } from "react";
-import type { ProductsData } from "../productsData";
+import { useContext, type FormEvent } from "react";
 import { CheckOutProductsList } from "../components/checkoutComponents/CheckOutProductsList";
 import { DataContext } from "../context/DataContext";
 
 export const CheckOut = () => {
-  const [userProducts, setUserProducts] = useState<ProductsData[] | undefined>(
-    []
-  );
-  const { userData } = useContext(DataContext);
-
-  useEffect(() => {
-    const findUser = userData.find((u) => u.isLogin === true);
-
-    setUserProducts(findUser?.cart);
-  }, [userData]);
-
+  const { userCartList, userSubTotal } = useContext(DataContext);
   const handleUserBillingDetails = (e: FormEvent) => {
     e.preventDefault();
   };
@@ -104,7 +93,7 @@ export const CheckOut = () => {
         <div className="pt-[32px]">
           <div className="w-[422px]">
             <ul className="flex flex-col gap-8">
-              {userProducts?.map((p) => (
+              {userCartList?.map((p) => (
                 <li key={p.id}>
                   <CheckOutProductsList
                     productName={p.productName}
@@ -118,7 +107,7 @@ export const CheckOut = () => {
             <div className="flex flex-col gap-5 mt-8">
               <div className="flex items-center justify-between border-b pb-2.5">
                 <span>Subtotal:</span>
-                <span>$1750</span>
+                <span>${userSubTotal}</span>
               </div>
               <div className="flex items-center justify-between border-b pb-2.5">
                 <span>Shipping:</span>
@@ -126,7 +115,7 @@ export const CheckOut = () => {
               </div>
               <div className="flex items-center justify-between mb-2.5">
                 <span>Total:</span>
-                <span>$1750</span>
+                <span>${userSubTotal}</span>
               </div>
             </div>
             <div className="flex justify-between mt-5">
