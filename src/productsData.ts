@@ -4,7 +4,7 @@ export type ProductsData = {
   discount?: string;
   productImage: string;
   productName: string;
-  originalProductPrice: number;
+  originalProductPrice?: number;
   discountedProductPrice?: number;
   rating?: string;
   quantity?: number;

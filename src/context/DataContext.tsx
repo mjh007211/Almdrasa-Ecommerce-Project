@@ -12,7 +12,7 @@ type AuthenticationContextType = {
   cartBadge: number | undefined;
   heartBadge: number | undefined;
   userFavoriteList: ProductsData[];
-  userCartList: ProductsData[];
+  userCartList: ProductsData[] | undefined;
   userSubTotal: number | undefined;
   setActiveLink: (link: string) => void;
   setUserData: (data: UserData[]) => void;

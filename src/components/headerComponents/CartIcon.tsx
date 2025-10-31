@@ -1,15 +1,14 @@
 import { useContext } from "react";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 import { DataContext } from "../../context/DataContext";
 
 export const CartIcon = () => {
-  const navigator = useNavigate();
   const { cartBadge, isLogin } = useContext(DataContext);
 
   return (
-    <a
+    <Link
       className="relative cursor-pointer transition-transform duration-300 hover:scale-110"
-      onClick={() => navigator("/card")}
+      to="/card"
     >
       {isLogin && (
         <div className="absolute flex items-center justify-center right-0 top-0 w-[16px] h-[16px] rounded-full bg-[#DB4444] text-[#FAFAFA] text-[12px]">
@@ -53,6 +52,6 @@ export const CartIcon = () => {
           stroke-linejoin="round"
         />
       </svg>
-    </a>
+    </Link>
   );
 };

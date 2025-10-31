@@ -59,7 +59,9 @@ function App() {
   const [cartBadge, setCartBadge] = useState<number | undefined>(0);
   const [heartBadge, setHeartBadge] = useState<number | undefined>(0);
   const [userFavoriteList, setUserFavoriteList] = useState<ProductsData[]>([]);
-  const [userCartList, setUserCartList] = useState<ProductsData[]>([]);
+  const [userCartList, setUserCartList] = useState<ProductsData[] | undefined>(
+    []
+  );
   const [userSubTotal, setUserSubTotal] = useState(0);
 
   const getUserDataFromLocalStorge = () => {
@@ -68,15 +70,16 @@ function App() {
     );
 
     const findUser = getStoredUsers.find((u) => u.isLogin === true);
-
     const userCartLen = findUser?.cart.length;
     const userFavoriteProductsLen = findUser?.favoriteProducts.length;
+    const userCart = findUser?.cart;
 
     if (findUser) {
       setIsLogin(true);
       setIsAllowToSignin(false);
       setCartBadge(userCartLen);
       setHeartBadge(userFavoriteProductsLen);
+      setUserCartList(userCart);
     } else {
       setIsLogin(false);
       setIsAllowToSignin(true);

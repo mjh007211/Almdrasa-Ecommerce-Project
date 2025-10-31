@@ -10,7 +10,7 @@ import {
   Logout,
 } from "@mui/icons-material";
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import type { UserData } from "../../App";
 import { DataContext } from "../../context/DataContext";
 
@@ -134,7 +134,7 @@ export const MyAccountIcon = () => {
           sx={{ display: "flex", gap: 2, alignItems: "center" }}
         >
           <AccountCircle sx={{ color: "white" }} />
-          <a onClick={() => navigator("/my-account")}>Manage My Account</a>
+          <Link to="/my-account">Manage My Account</Link>
         </MenuItem>
 
         <MenuItem

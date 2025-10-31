@@ -12,7 +12,7 @@ export const CartProductRow = ({
   quantity = 1,
 }: ProductsData) => {
   const [productSubTotal, setProductSubTotal] = useState(
-    discountedProductPrice ?? originalProductPrice
+    discountedProductPrice ?? originalProductPrice * quantity
   );
   const [inputValue, setInputValue] = useState(quantity.toString());
   const { userData, setUserData, setCartBadge, setUserCartList } =

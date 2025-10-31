@@ -12,7 +12,11 @@ export const CheckOutProductsList = ({
         <img className="w-[54px] h-[54px]" src={productImage} alt="" />
         <span>{productName}</span>
       </div>
-      <span>${discountedProductPrice ?? originalProductPrice}</span>
+      {discountedProductPrice || originalProductPrice ? (
+        <span>${discountedProductPrice ?? originalProductPrice}</span>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
