@@ -85,14 +85,16 @@ export const Header = () => {
         )}
       </div>
       {isFocused && searchValue && (
-        <div className="w-[422px] h-[300px] overflow-hidden overflow-y-auto absolute bg-white right-15 top-12 py-5 rounded-[4px] z-10 shadow-[0px_1px_13px_0px_rgba(0,0,0,0.05)]">
+        <div className="absolute w-[422px] max-h-80 overflow-y-auto right-0 top-12 z-20 bg-white border border-gray-200 rounded-lg shadow-[0_4px_20px_rgba(0,0,0,0.08)] backdrop-blur-sm transition-all duration-200 scrollbar-thin scrollbar-thumb-gray-300">
           {searchedProducts.length === 0 ? (
-            <p className="text-red-600 text-center">Product not found</p>
+            <p className="text-center text-sm text-gray-500 py-5">
+              No products found
+            </p>
           ) : (
-            <ul className="flex flex-col gap-2 justify-center">
+            <ul className="flex flex-col">
               {searchedProducts.map((p) => (
                 <div className="relative group" key={p.id}>
-                  <li className="border-b last:border-b-0 border-[#0000003b] px-5 pb-5 last:pb-0 cursor-pointer">
+                  <li className="border-b last:border-b-0 border-gray-100 px-4 py-3 cursor-pointer transition-colors duration-200">
                     <SeacrhProductsList
                       category={p.category}
                       originalProductPrice={p.originalProductPrice}
@@ -101,7 +103,6 @@ export const Header = () => {
                       productName={p.productName}
                     />
                   </li>
-                  <div className="w-full h-full absolute top-0 left-0 z-[-1] transition-colors duration-300 group-hover:bg-[#ededed]"></div>
                 </div>
               ))}
             </ul>
