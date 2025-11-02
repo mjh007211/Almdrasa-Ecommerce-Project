@@ -50,6 +50,7 @@ export const HeaderNav = () => {
         {["Home", "Contact", "About", "Sign Up"].map((link) => (
           <li key={link}>
             <a
+              tabIndex={0}
               onClick={(event) => handleOnClick(event, link)}
               className={`hover:underline cursor-pointer   ${
                 activeLink === link && !disableNavUnderline ? "underline" : ""

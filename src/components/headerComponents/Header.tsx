@@ -15,7 +15,7 @@ export const Header = () => {
   const [isFocused, setIsFocused] = useState(false);
 
   const navigator = useNavigate();
-  const { setActiveLink, isLogin } = useContext(DataContext);
+  const { setActiveLink, setDisplayProduct, isLogin } = useContext(DataContext);
 
   const handleLoginNavigator = () => {
     navigator("/login");
@@ -33,6 +33,7 @@ export const Header = () => {
     const searchedProducts = allProductsData.filter((p) =>
       p.productName.toLocaleLowerCase().includes(searchInputValue)
     );
+    localStorage.setItem("displayProduct", JSON.stringify(searchedProducts));
     setSearchedProducts(searchedProducts);
   };
 

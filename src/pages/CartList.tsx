@@ -41,12 +41,12 @@ export const CartList = () => {
         const quantity = product.quantity ?? 1;
         return acc + price * quantity;
       }, 0);
-
+      localStorage.setItem("userSubTotal", JSON.stringify(userSubTotal));
       setUserSubTotal(total);
     } else {
       setUserSubTotal(0);
     }
-  }, [userCartList, setUserSubTotal]);
+  }, [userCartList, setUserSubTotal, userSubTotal]);
 
   return (
     <section className="mt-[60px] mb-28">

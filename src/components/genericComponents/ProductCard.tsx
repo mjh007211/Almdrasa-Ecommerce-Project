@@ -22,12 +22,12 @@ export const ProductCard = ({
   const [isVisible, setIsVisible] = useState(false);
   const {
     userData,
+    displayProduct,
     setUserData,
     setCartBadge,
     setHeartBadge,
     setDisplayProduct,
     setDisplayRelatedProduct,
-    setUserSubTotal,
   } = useContext(DataContext);
 
   useEffect(() => {
@@ -143,6 +143,7 @@ export const ProductCard = ({
         p.category === product.category && p.productName !== product.productName
     );
 
+    localStorage.setItem("displayProduct", JSON.stringify(product));
     setDisplayRelatedProduct(getRelatedProduct);
     setDisplayProduct(product);
     navigator("/product");

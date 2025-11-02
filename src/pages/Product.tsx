@@ -8,7 +8,9 @@ import { DataContext } from "../context/DataContext";
 export const Product = () => {
   const { displayProduct, displayRelatedProduct, setDisplayRelatedProduct } =
     useContext(DataContext);
+
   const handleDisplayRelatedProduct = () => {
+    if (!displayProduct.category) return;
     const getRelatedProduct = allProductsData.filter(
       (p) =>
         p.category === displayProduct.category &&
@@ -19,7 +21,7 @@ export const Product = () => {
 
   useEffect(() => {
     handleDisplayRelatedProduct();
-  }, []);
+  }, [displayProduct]);
 
   return (
     <section className="mt-16 mb-24">

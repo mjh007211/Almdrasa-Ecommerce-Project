@@ -27,7 +27,7 @@ export const SeacrhProductsList = ({
       (p) =>
         p.category === product.category && p.productName !== product.productName
     );
-
+    localStorage.setItem("displayProduct", JSON.stringify(product));
     setDisplayRelatedProduct(getRelatedProduct);
     setDisplayProduct(product);
     navigator("/product");

@@ -48,6 +48,7 @@ function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [isAllowToSignin, setIsAllowToSignin] = useState(true);
   const [displayProduct, setDisplayProduct] = useState<ProductsData>({
+    category: "",
     productName: "",
     productImage: "",
     originalProductPrice: 0,
@@ -62,8 +63,10 @@ function App() {
   const [userCartList, setUserCartList] = useState<ProductsData[] | undefined>(
     []
   );
-  const [userSubTotal, setUserSubTotal] = useState(0);
-
+  const [userSubTotal, setUserSubTotal] = useState(() => {
+    const saved = localStorage.getItem("userSubTotal");
+    return saved ? JSON.parse(saved) : 0;
+  });
   const getUserDataFromLocalStorge = () => {
     const getStoredUsers: UserData[] = JSON.parse(
       localStorage.getItem("users") || "[]"
@@ -93,6 +96,13 @@ function App() {
   useEffect(() => {
     getUserDataFromLocalStorge();
   }, [isLogin]);
+
+  useEffect(() => {
+    const savedProduct = localStorage.getItem("displayProduct");
+    if (savedProduct) {
+      setDisplayProduct(JSON.parse(savedProduct));
+    }
+  }, []);
 
   return (
     <>
