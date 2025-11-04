@@ -135,12 +135,7 @@ export const Product = () => {
                 .00
               </span>
             </div>
-            <p className="mt-5">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Cupiditate exercitationem quidem, natus nisi, hic quos aspernatur
-              architecto repellat, laudantium debitis voluptatibus! Eum,
-              perferendis eaque! Quibusdam sit autem ex distinctio suscipit!
-            </p>
+            <p className="mt-5">{displayProduct.description}</p>
           </div>
 
           <div className="flex items-center gap-6 mt-5">
@@ -433,6 +428,7 @@ export const Product = () => {
                   originalProductPrice={p.originalProductPrice}
                   discountedProductPrice={p.discountedProductPrice}
                   rating={p.rating}
+                  description={p.description}
                 />
               </li>
             ))}

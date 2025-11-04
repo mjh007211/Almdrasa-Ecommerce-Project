@@ -123,6 +123,7 @@ export const CheckOut = () => {
                 <div className="flex gap-4">
                   <input
                     className="w-[24px] h-[24px] accent-black"
+                    defaultChecked
                     name="pay"
                     id="bank"
                     type="radio"

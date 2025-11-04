@@ -8,6 +8,7 @@ export type ProductsData = {
   discountedProductPrice?: number;
   rating?: string;
   quantity?: number;
+  description?: string;
 };
 
 export const flashSalesProductsData: ProductsData[] = [
@@ -20,6 +21,8 @@ export const flashSalesProductsData: ProductsData[] = [
     discountedProductPrice: 120,
     rating: "88",
     category: "gaming",
+    description:
+      "Ergonomic USB gamepad with responsive buttons and non-slip grip for precise gaming control.",
   },
   {
     id: crypto.randomUUID(),
@@ -30,6 +33,8 @@ export const flashSalesProductsData: ProductsData[] = [
     discountedProductPrice: 960,
     rating: "75",
     category: "gaming",
+    description:
+      "Durable wired keyboard with mechanical keys for fast typing and stable gaming input.",
   },
   {
     id: crypto.randomUUID(),
@@ -40,6 +45,8 @@ export const flashSalesProductsData: ProductsData[] = [
     discountedProductPrice: 370,
     rating: "99",
     category: "electronics",
+    description:
+      "Full HD IPS monitor delivering sharp visuals and smooth frame performance for gaming.",
   },
   {
     id: crypto.randomUUID(),
@@ -50,14 +57,19 @@ export const flashSalesProductsData: ProductsData[] = [
     discountedProductPrice: 375,
     rating: "99",
     category: "furniture",
+    description:
+      "High-density foam chair with adjustable height and back support for long sitting comfort.",
   },
   {
     id: crypto.randomUUID(),
     productImage: "/faa80b609e3950aed9181acb44510f859f50d850.png",
-    productName: "PlayStation 5 Controller Skin High quality vinyl",
+    productName: "PlayStation 5 Controller",
     originalProductPrice: 192,
     rating: "99",
     category: "gaming",
+    // keep original figma description
+    description:
+      "High quality vinyl with air channel adhesive for easy bubble free install & mess free removal. Pressure sensitive.",
   },
 ];
 
@@ -70,6 +82,8 @@ export const thisMonthProductsData: ProductsData[] = [
     discountedProductPrice: 260,
     rating: "65",
     category: "clothing",
+    description:
+      "Warm and lightweight winter coat made from durable fabric with soft inner lining.",
   },
   {
     id: crypto.randomUUID(),
@@ -79,6 +93,8 @@ export const thisMonthProductsData: ProductsData[] = [
     discountedProductPrice: 960,
     rating: "65",
     category: "accessories",
+    description:
+      "Premium leather duffle bag featuring metal zippers and reinforced handles for travel use.",
   },
   {
     id: crypto.randomUUID(),
@@ -88,6 +104,8 @@ export const thisMonthProductsData: ProductsData[] = [
     discountedProductPrice: 160,
     rating: "65",
     category: "electronics",
+    description:
+      "Efficient liquid CPU cooler with RGB lighting and quiet performance for gaming setups.",
   },
   {
     id: crypto.randomUUID(),
@@ -96,6 +114,8 @@ export const thisMonthProductsData: ProductsData[] = [
     originalProductPrice: 360,
     rating: "65",
     category: "furniture",
+    description:
+      "Compact wooden bookshelf with smooth finish and sturdy design for home storage.",
   },
 ];
 
@@ -107,6 +127,8 @@ export const ourProductsData: ProductsData[] = [
     originalProductPrice: 100,
     rating: "35",
     category: "pet",
+    description:
+      "Nutritious dry dog food made with balanced protein and vitamins for daily feeding.",
   },
   {
     id: crypto.randomUUID(),
@@ -115,6 +137,8 @@ export const ourProductsData: ProductsData[] = [
     originalProductPrice: 360,
     rating: "95",
     category: "electronics",
+    description:
+      "High-resolution DSLR camera with fast autofocus and crisp color accuracy for professionals.",
   },
   {
     id: crypto.randomUUID(),
@@ -123,6 +147,8 @@ export const ourProductsData: ProductsData[] = [
     originalProductPrice: 700,
     rating: "325",
     category: "electronics",
+    description:
+      "Powerful gaming laptop with Full HD display and efficient cooling for extended gameplay.",
   },
   {
     id: crypto.randomUUID(),
@@ -131,6 +157,8 @@ export const ourProductsData: ProductsData[] = [
     originalProductPrice: 500,
     rating: "145",
     category: "beauty",
+    description:
+      "Complete skincare set designed to cleanse, treat, and hydrate for clear glowing skin.",
   },
   {
     id: crypto.randomUUID(),
@@ -139,6 +167,8 @@ export const ourProductsData: ProductsData[] = [
     originalProductPrice: 960,
     rating: "65",
     category: "toys",
+    description:
+      "Rechargeable kids ride-on car with working headlights and easy steering for fun rides.",
   },
   {
     id: crypto.randomUUID(),
@@ -147,6 +177,8 @@ export const ourProductsData: ProductsData[] = [
     originalProductPrice: 1160,
     rating: "35",
     category: "sports",
+    description:
+      "Lightweight soccer cleats with firm grip studs for agility and control on the field.",
   },
   {
     id: crypto.randomUUID(),
@@ -155,6 +187,8 @@ export const ourProductsData: ProductsData[] = [
     originalProductPrice: 660,
     rating: "55",
     category: "gaming",
+    description:
+      "USB game controller with smooth analog sticks and responsive triggers for shooting games.",
   },
   {
     id: crypto.randomUUID(),
@@ -163,6 +197,8 @@ export const ourProductsData: ProductsData[] = [
     originalProductPrice: 660,
     rating: "55",
     category: "clothing",
+    description:
+      "Soft satin jacket with quilted stitching and smooth inner lining for everyday wear.",
   },
 ];
 
@@ -176,6 +212,8 @@ export const justForYouData: ProductsData[] = [
     discountedProductPrice: 960,
     rating: "65",
     category: "electronics",
+    description:
+      "Full HD gaming laptop with powerful graphics and durable build for smooth performance.",
   },
   {
     id: crypto.randomUUID(),
@@ -184,6 +222,8 @@ export const justForYouData: ProductsData[] = [
     originalProductPrice: 1160,
     rating: "65",
     category: "electronics",
+    description:
+      "Crisp IPS panel monitor with vivid colors and low response time ideal for gaming visuals.",
   },
   {
     id: crypto.randomUUID(),
@@ -192,6 +232,8 @@ export const justForYouData: ProductsData[] = [
     originalProductPrice: 560,
     rating: "65",
     category: "gaming",
+    description:
+      "Ergonomic USB gamepad with dual vibration motors and precise D-pad for immersive play.",
   },
   {
     id: crypto.randomUUID(),
@@ -200,6 +242,8 @@ export const justForYouData: ProductsData[] = [
     originalProductPrice: 200,
     rating: "65",
     category: "gaming",
+    description:
+      "Compact wired keyboard with responsive mechanical switches for accurate gaming input.",
   },
 ];
 

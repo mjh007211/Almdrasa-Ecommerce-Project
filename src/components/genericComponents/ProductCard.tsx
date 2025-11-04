@@ -15,6 +15,7 @@ export const ProductCard = ({
   originalProductPrice,
   discountedProductPrice,
   rating,
+  description,
 }: ProductsData) => {
   const [isError, setIsError] = useState<
     "sameProduct" | "userNotFound" | "success" | null
@@ -22,7 +23,6 @@ export const ProductCard = ({
   const [isVisible, setIsVisible] = useState(false);
   const {
     userData,
-    displayProduct,
     setUserData,
     setCartBadge,
     setHeartBadge,
@@ -136,6 +136,7 @@ export const ProductCard = ({
       productName,
       originalProductPrice,
       discountedProductPrice,
+      description,
     };
 
     const getRelatedProduct = allProductsData.filter(

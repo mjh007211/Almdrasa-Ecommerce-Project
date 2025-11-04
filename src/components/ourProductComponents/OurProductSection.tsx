@@ -59,6 +59,7 @@ export const OurProductSection = () => {
               productName,
               originalProductPrice,
               rating,
+              description,
             }) => (
               <li key={id}>
                 <ProductCard
@@ -68,6 +69,7 @@ export const OurProductSection = () => {
                   productName={productName}
                   originalProductPrice={originalProductPrice}
                   rating={rating}
+                  description={description}
                 />
               </li>
             )

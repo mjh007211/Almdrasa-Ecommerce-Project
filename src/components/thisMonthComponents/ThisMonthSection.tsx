@@ -24,6 +24,7 @@ export const ThisMonthSection = () => {
               originalProductPrice,
               discountedProductPrice,
               rating,
+              description,
             }) => (
               <li key={id}>
                 <ProductCard
@@ -34,6 +35,7 @@ export const ThisMonthSection = () => {
                   originalProductPrice={originalProductPrice}
                   discountedProductPrice={discountedProductPrice}
                   rating={rating}
+                  description={description}
                 />
               </li>
             )

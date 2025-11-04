@@ -54,7 +54,14 @@ export const FavoriteProductsList = () => {
 
     const findUser = userData.find((u) => u.isLogin === true);
 
-    const updateUserCart = [...findUser?.cart, ...userFavoriteList];
+    const fliterFavoriteProductsList = userFavoriteList.filter(
+      (favorProduct) =>
+        !findUser?.cart.some(
+          (cartProduct) => cartProduct.productName === favorProduct.productName
+        )
+    );
+
+    const updateUserCart = [...findUser?.cart, ...fliterFavoriteProductsList];
 
     const updateUsers = userData.map((u) =>
       u.isLogin === true
@@ -129,6 +136,7 @@ export const FavoriteProductsList = () => {
                     originalProductPrice={p.originalProductPrice}
                     discountedProductPrice={p.discountedProductPrice}
                     rating={p.rating}
+                    description={p.description}
                   />
                 </li>
               ))}
