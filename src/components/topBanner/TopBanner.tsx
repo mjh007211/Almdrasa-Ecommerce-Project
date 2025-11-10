@@ -1,6 +1,6 @@
 export const TopBanner = () => {
   return (
-    <div className="bg-black max-w-[1440px] mx-auto px-[136px] py-3">
+    <div className="bg-black min-w-[1440px] mx-auto px-[136px] py-3">
       <div className="flex gap-[50px] items-center justify-between text-[14px] max-w-[859px] ml-auto text-[#fafafa]">
         <div className="flex items-center gap-2.5">
           <p className="font-Poppins font-normal">

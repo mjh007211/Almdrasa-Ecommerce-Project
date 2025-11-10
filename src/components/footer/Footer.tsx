@@ -4,7 +4,7 @@ import ApplePlay from "/38932d5accb54c528f9bcf326ca48ea29bd6d890.png";
 
 export const Footer = () => {
   return (
-    <footer className="w-[1440px] h-[440px] absolute left-[50%] translate-x-[-50%] mt-8 pt-16 text-[#FAFAFA] bg-black">
+    <footer className="min-w-[1440px] h-[548px]  mt-auto pt-16 text-[#FAFAFA] bg-black">
       <div className="container max-w-[1170px] mx-auto">
         <div className="flex gap-20">
           <div className="flex flex-col gap-4 ">

@@ -258,7 +258,7 @@ export const FeaturedSection = () => {
       </div>
       <div className="flex justify-end mt-16">
         <button
-          className="cursor-pointer transition-transform duration-300 hover:scale-110"
+          className="cursor-pointer transition-transform duration-300 hover:scale-110 mb-8"
           onClick={() =>
             window.scrollTo({
               top: 0,

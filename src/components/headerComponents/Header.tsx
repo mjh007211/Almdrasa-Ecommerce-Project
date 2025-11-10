@@ -15,7 +15,7 @@ export const Header = () => {
   const [isFocused, setIsFocused] = useState(false);
 
   const navigator = useNavigate();
-  const { setActiveLink, setDisplayProduct, isLogin } = useContext(DataContext);
+  const { setActiveLink, isLogin } = useContext(DataContext);
 
   const handleLoginNavigator = () => {
     navigator("/login");

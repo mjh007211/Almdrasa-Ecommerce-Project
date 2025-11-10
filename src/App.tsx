@@ -107,57 +107,59 @@ function App() {
   return (
     <>
       <TopBanner />
-      <div className="max-w-[1170px] mx-auto font-Poppins">
-        <DataContext.Provider
-          value={{
-            activeLink,
-            setActiveLink,
-            userData,
-            setUserData,
-            isLogin,
-            setIsLogin,
-            isAllowToSignin,
-            setIsAllowToSignin,
-            displayProduct,
-            setDisplayProduct,
-            displayRelatedProduct,
-            setDisplayRelatedProduct,
-            cartBadge,
-            setCartBadge,
-            heartBadge,
-            setHeartBadge,
-            setUserFavoriteList,
-            userFavoriteList,
-            setUserCartList,
-            userCartList,
-            userSubTotal,
-            setUserSubTotal,
-          }}
-        >
-          <ThemeProvider theme={theme}>
-            <BrowserRouter>
-              <ScrollToTop />
-              <Header />
-              <div className="h-[1px] w-[1440px] bg-[#0000003b]  absolute left-[50%] translate-x-[-50%] top-[142px]"></div>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/sign-up" element={<SignUp />} />
-                <Route path="/login" element={<Login />} />
-                <Route
-                  path="/favorite-list"
-                  element={<FavoriteProductsList />}
-                />
-                <Route path="/card" element={<CartList />} />
-                <Route path="/check-out" element={<CheckOut />} />
-                <Route path="/my-account" element={<MyAccount />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/product" element={<Product />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </ThemeProvider>
-        </DataContext.Provider>
+      <div>
+        <div className="max-w-[1170px] mx-auto font-Poppins">
+          <DataContext.Provider
+            value={{
+              activeLink,
+              setActiveLink,
+              userData,
+              setUserData,
+              isLogin,
+              setIsLogin,
+              isAllowToSignin,
+              setIsAllowToSignin,
+              displayProduct,
+              setDisplayProduct,
+              displayRelatedProduct,
+              setDisplayRelatedProduct,
+              cartBadge,
+              setCartBadge,
+              heartBadge,
+              setHeartBadge,
+              setUserFavoriteList,
+              userFavoriteList,
+              setUserCartList,
+              userCartList,
+              userSubTotal,
+              setUserSubTotal,
+            }}
+          >
+            <ThemeProvider theme={theme}>
+              <BrowserRouter>
+                <ScrollToTop />
+                <Header />
+                <div className="h-[1px] w-full bg-[#0000003b] absolute left-0 top-[142px]"></div>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/sign-up" element={<SignUp />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route
+                    path="/favorite-list"
+                    element={<FavoriteProductsList />}
+                  />
+                  <Route path="/card" element={<CartList />} />
+                  <Route path="/check-out" element={<CheckOut />} />
+                  <Route path="/my-account" element={<MyAccount />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/product" element={<Product />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            </ThemeProvider>
+          </DataContext.Provider>
+        </div>
         <Footer />
       </div>
     </>
