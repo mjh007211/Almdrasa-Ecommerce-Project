@@ -61,7 +61,6 @@ export const FavoriteProductCard = ({
 
     setHeartBadge((prev: number) => prev - 1);
 
-    localStorage.setItem("users", JSON.stringify(updateUsers));
     setUserData(updateUsers);
     setUserFavoriteList(updateUserFavoriteProductList);
   };
@@ -99,7 +98,6 @@ export const FavoriteProductCard = ({
 
     setCartBadge((prev: number) => prev + 1);
 
-    localStorage.setItem("users", JSON.stringify(updateUsers));
     setUserData(updateUsers);
     setIsError("success");
   };

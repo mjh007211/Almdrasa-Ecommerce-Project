@@ -72,7 +72,6 @@ export const FavoriteProductsList = () => {
     setUserData(updateUsers);
     setCartBadge(updateUserCart.length);
     setHeartBadge(0);
-    localStorage.setItem("users", JSON.stringify(updateUsers));
   };
 
   return (

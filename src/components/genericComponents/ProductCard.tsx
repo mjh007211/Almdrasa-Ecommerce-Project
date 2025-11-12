@@ -86,7 +86,6 @@ export const ProductCard = ({
 
     setHeartBadge((prev: number) => prev + 1);
 
-    localStorage.setItem("users", JSON.stringify(updateUsers));
     setUserData(updateUsers);
     setIsError("success");
   };
@@ -122,9 +121,8 @@ export const ProductCard = ({
       u.isLogin === true ? { ...u, cart: updateUserCart } : u
     );
 
-    setCartBadge((prev: number) => prev + 1);
+    setCartBadge((prev) => prev + 1);
 
-    localStorage.setItem("users", JSON.stringify(updateUsers));
     setUserData(updateUsers);
     setIsError("success");
   };

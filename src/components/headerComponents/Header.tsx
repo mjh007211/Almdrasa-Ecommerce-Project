@@ -41,7 +41,7 @@ export const Header = () => {
     <header className="relative flex items-center justify-between mt-10">
       <HeaderTitle />
       <HeaderNav />
-      <div className="flex gap-5">
+      <div className="flex gap-5 mr-12">
         <div className="relative">
           <input
             className="py-2.5 px-5 w-[243px] bg-[#F5F5F5] border-none outline-none text-[12px] rounded-[4px]"

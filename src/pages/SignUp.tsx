@@ -84,7 +84,6 @@ export const SignUp = () => {
 
     const updateUserData: UserData[] = [...userData, user];
 
-    localStorage.setItem("users", JSON.stringify(updateUserData));
     setUserData(updateUserData);
     setIsAllowToSignin(false);
     setIsLogin(true);

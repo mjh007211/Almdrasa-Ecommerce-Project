@@ -38,7 +38,6 @@ export const CartProductRow = ({
       u.isLogin === true ? { ...u, cart: updatedCart } : u
     );
 
-    localStorage.setItem("users", JSON.stringify(updatedUsers));
     setUserData(updatedUsers);
     setUserCartList(updatedCart);
   };
@@ -67,7 +66,6 @@ export const CartProductRow = ({
 
     setCartBadge((prev: number) => prev - 1);
 
-    localStorage.setItem("users", JSON.stringify(updateUsers));
     setUserData(updateUsers);
     setUserCartList(updateUserProductCart);
   };

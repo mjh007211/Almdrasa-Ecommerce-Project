@@ -55,7 +55,6 @@ export const MyAccountIcon = () => {
       u.isLogin === true ? { ...u, isLogin: false } : u
     );
 
-    localStorage.setItem("users", JSON.stringify(updateUsers));
     setUserData(updateUsers);
     setIsLogin(false);
     setIsAllowToSignin(true);
@@ -64,7 +63,7 @@ export const MyAccountIcon = () => {
   };
 
   return (
-    <div>
+    <div className="absolute top-0 right-0">
       <Button
         sx={{
           padding: "0",

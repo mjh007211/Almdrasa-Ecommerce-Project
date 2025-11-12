@@ -22,7 +22,7 @@ export const Login = () => {
     setIsLogin,
   } = useContext(DataContext);
 
-  const userInvaildMessage = "Email/Passaword incorrect. Try again.";
+  const userInvaildMessage = "Email/Password incorrect. Try again.";
   const UserNotFoundMessage =
     "Sorry, there is no user registered with the entered email/phone. Try again.";
 
@@ -54,7 +54,6 @@ export const Login = () => {
         : { ...u, isLogin: false }
     );
 
-    localStorage.setItem("users", JSON.stringify(updateUsers));
     setUserData(updateUsers);
     setIsLogin(true);
     setIsAllowToSignin(false);
