@@ -4,8 +4,8 @@ import ApplePlay from "/38932d5accb54c528f9bcf326ca48ea29bd6d890.png";
 
 export const Footer = () => {
   return (
-    <footer className="min-w-[1440px] h-[548px]  mt-auto pt-16 text-[#FAFAFA] bg-black">
-      <div className="container max-w-[1170px] mx-auto">
+    <footer className="flex flex-col gap-6 min-w-[1440px] h-[440px]  mt-auto pt-16 pb-7 text-[#FAFAFA] bg-black">
+      <div className="max-w-[1170px] mx-auto">
         <div className="flex gap-20">
           <div className="flex flex-col gap-4 ">
             <h4 className="text-2xl font-bold">Exclusive</h4>
@@ -55,6 +55,12 @@ export const Footer = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="flex flex-col gap-2.5">
+        <div className="w-full h-[1px] bg-[#cccccc3b]"></div>
+        <p className="text-center text-[#cccccc3b]">
+          &copy; Copyright Rimel 2022. All right reserved
+        </p>
       </div>
     </footer>
   );
