@@ -49,7 +49,7 @@ export const CartList = () => {
   }, [userCartList, setUserSubTotal, userSubTotal]);
 
   return (
-    <section className="mt-[60px] mb-28">
+    <section className="mt-[60px] mb-[154px]">
       <div className="flex gap-3 text-[14px]">
         <span className="text-[#0000003b]">Home</span> <span>/</span>
         Cart
